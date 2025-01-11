@@ -26,7 +26,7 @@ export default function CardGrid() {
             <p>
               ชื่อภารกิจ <span className="text-blue-500">หมวดหมู่</span>
             </p>
-            <p>
+            <p className="text-blue-500">
               ชื่อภารกิจ <span className="text-blue-500">หมวดหมู่</span>
             </p>
             <p>
