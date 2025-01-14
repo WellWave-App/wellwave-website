@@ -5,13 +5,9 @@ import React from 'react';
 import CardGrid from "./components/CardGrid";
 const Page: React.FC = () => {
   return (
-    <div className="min-h-screen  bg-gray-100">
-    {/* Main Content */}
-
+    <div className=" bg-gray-100">
   
-    {/* <div className=" bg-gray-100"> */}
     <CardGrid />
-    {/* </div> */}
   </div>
   );
 };

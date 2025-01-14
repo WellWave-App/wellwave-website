@@ -11,6 +11,8 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+      }, fontFamily: {
+        sans: ['var(--font-noto-sans-thai)', 'sans-serif'], // กำหนดฟอนต์ที่ต้องการ
       },
     },
   },

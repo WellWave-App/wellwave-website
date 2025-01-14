@@ -1,125 +1,174 @@
+import Image from "next/image";
+
 export default function CardGrid() {
   return (
-    <div className="container mx-auto p-6  flex flex-col">
+    <div className="container mx-auto p-6  flex flex-col font-sans text-black">
       {/* Grid Layout */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 flex-grow overflow-hidden">
+      <div className="grid grid-cols-[repeat(3,_minmax(250px,_1fr))] gap-4">
+        {" "}
         {/* การ์ดภารกิจ (ยาวลงมาเต็มพื้นที่ตามแถว) */}
-        <div className="bg-white rounded-lg shadow-md p-6 row-span-2">
-          <h2 className="text-lg font-bold flex items-center mb-4">
-            ภารกิจ{" "}
-            <span className="ml-2 bg-blue-500 text-white px-2 py-1 rounded text-sm">
-              35
-            </span>
+        <div className="bg-white rounded-lg shadow-md p-6 row-span-2 flex flex-col space-y-4 h-[610px]  relative">
+          <h2 className="text-lg font-bold flex justify-start items-center mb-4 border-b-2 border-gray-300 pb-2 ">
+            <Image
+              src="/asset/fire.svg"
+              alt="fire"
+              width={32}
+              height={32}
+              className="mr-3"
+            />
+            <span>ภารกิจ</span>
+            <span className="text-black text-lg ml-auto ">35</span>
           </h2>
-          <ul className="text-sm space-y-2">
-            <li>
-              ภารกิจประจำวัน <strong>35</strong>
+
+          <ul className="space-y-2  flex flex-col justify-start">
+            <li className="flex justify-between">
+              <span className="text-gray-600">จำนวน</span>
             </li>
-            <li>
-              ภารกิจท้าทาย <strong>35</strong>
+            <li className="flex justify-between">
+              <span>ภารกิจประจำวัน</span>
+              <strong className="text-right">35</strong>
             </li>
-            <li>
-              เควส <strong>35</strong>
+            <li className="flex justify-between">
+              <span>ภารกิจท้าทาย</span>
+              <strong className="text-right">35</strong>
+            </li>
+            <li className="flex justify-between pb-6 border-b-2 border-gray-300">
+              <span>เควส</span>
+              <strong className="text-right">35</strong>
             </li>
           </ul>
-          <div className="mt-4 space-y-2">
-            <p>
-              ชื่อภารกิจ <span className="text-blue-500">หมวดหมู่</span>
+
+          <div className="mt-4 space-y-2 ">
+            <li className="flex justify-between">
+              <span className="text-gray-600">ล่าสุด</span>
+            </li>
+            <p className="flex justify-between">
+              ชื่อภารกิจ
+              <span className="text-blue-500 bg-blue-200 px-2 py-1 rounded ml-auto">
+                หมวดหมู่
+              </span>
             </p>
-            <p className="text-blue-500">
-              ชื่อภารกิจ <span className="text-blue-500">หมวดหมู่</span>
+            <p className="flex justify-between">
+              ชื่อภารกิจ
+              <span className="text-blue-500 bg-blue-200 px-2 py-1 rounded ml-auto">
+                หมวดหมู่
+              </span>
             </p>
-            <p>
-              ชื่อภารกิจ <span className="text-blue-500">หมวดหมู่</span>
+
+            <p className="flex justify-between">
+              ชื่อภารกิจ
+              <span className="text-blue-500 bg-blue-200 px-2 py-1 rounded ml-auto">
+                หมวดหมู่
+              </span>
             </p>
-            <p>
-              ชื่อภารกิจ <span className="text-blue-500">หมวดหมู่</span>
+            <p className="flex justify-between">
+              ชื่อภารกิจ
+              <span className="text-blue-500 bg-blue-200 px-2 py-1 rounded ml-auto">
+                หมวดหมู่
+              </span>
             </p>
-            <p>
-              ชื่อภารกิจ <span className="text-blue-500">หมวดหมู่</span>
-            </p>
-            <p>
-              ชื่อภารกิจ <span className="text-blue-500">หมวดหมู่</span>
-            </p>
-            <p>
-              ชื่อภารกิจ <span className="text-blue-500">หมวดหมู่</span>
-            </p>
-            <p>
-              ชื่อภารกิจ <span className="text-blue-500">หมวดหมู่</span>
-            </p>
-            <p>
-              ชื่อภารกิจ <span className="text-blue-500">หมวดหมู่</span>
-            </p>
-            <p>
-              ชื่อภารกิจ <span className="text-blue-500">หมวดหมู่</span>
-            </p>
-            <p>
-              ชื่อภารกิจ <span className="text-blue-500">หมวดหมู่</span>
-            </p>
-            <p>
-              ชื่อภารกิจ <span className="text-blue-500">หมวดหมู่</span>
+            <p className="flex justify-between">
+              ชื่อภารกิจ
+              <span className="text-blue-500 bg-blue-200 px-2 py-1 rounded ml-auto">
+                หมวดหมู่
+              </span>
             </p>
           </div>
-          <p className="mt-6 text-right text-sm text-gray-500">
+
+          <p className="absolute bottom-5 right-0 mb-4 mr-4 text-sm text-gray-500">
             ดูเพิ่มเติม &gt;
           </p>
         </div>
-
         {/* Card 2 - บทความ */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-lg font-bold flex items-center mb-4">
-            บทความ{" "}
-            <span className="ml-2 bg-blue-500 text-white px-2 py-1 rounded text-sm">
-              40
-            </span>
+        <div className="bg-white rounded-lg shadow-md p-6 relative">
+          <h2 className="text-lg font-bold flex justify-start items-center mb-4 border-b-2 border-gray-300 pb-2">
+            <Image
+              src="/asset/article.svg" // ใช้ path ที่สัมพันธ์กับโฟลเดอร์ public
+              alt="fire"
+              width={32}
+              height={32}
+              className="mr-3"
+            />
+            บทความ <span className="text-black text-lg ml-auto">35</span>
           </h2>
-          <ul className="text-sm space-y-2">
-            <li>
-              โรคเบาหวาน <strong>35</strong>
+          <ul className="space-y-2">
+            <li className="flex justify-between">
+              <span className="text-gray-600">จำนวน</span>
             </li>
-            <li>
-              โรคความดันโลหิตสูง <strong>35</strong>
+            <li className="flex justify-between">
+              โรคเบาหวาน <strong className="text-right">35</strong>
             </li>
-            <li>
-              โรคไขมันในเลือดสูง <strong>35</strong>
+            <li className="flex justify-between">
+              โรคความดันโลหิตสูง <strong className="text-right">35</strong>
+            </li>
+            <li className="flex justify-between">
+              โรคไขมันในเลือดสูง <strong className="text-right">35</strong>
+            </li>
+            <li className="flex justify-between">
+              โรคอ้วน <strong className="text-right">35</strong>
+            </li>
+            <li className="flex justify-between">
+              อื่นๆ <strong className="text-right">35</strong>
             </li>
           </ul>
-        </div>
 
+          <p className="absolute bottom-0 right-0 mb-4 mr-4 text-sm text-gray-500">
+            ดูเพิ่มเติม &gt;
+          </p>
+        </div>
         {/* Card 3 - ความสำเร็จ */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-lg font-bold flex items-center mb-4">
-            ความสำเร็จ{" "}
-            <span className="ml-2 bg-blue-500 text-white px-2 py-1 rounded text-sm">
-              53
-            </span>
+        <div className="bg-white rounded-lg shadow-md p-6 relative">
+          <h2 className="text-lg font-bold flex justify-start items-center mb-4 border-b-2 border-gray-300 pb-2">
+            <Image
+              src="/asset/achieve.svg" // ใช้ path ที่สัมพันธ์กับโฟลเดอร์ public
+              alt="fire"
+              width={32}
+              height={32}
+              className="mr-3"
+            />
+            ความสำเร็จ <span className="text-black text-lg ml-auto">35</span>
           </h2>
-          <ul className="text-sm space-y-2">
-            <li>
-              เหรียญรางวัล <strong>35</strong>
+          <ul className="space-y-2">
+            <li className="flex justify-between">
+              <span className="text-gray-600">จำนวน</span>
             </li>
-            <li>
-              สถิติ <strong>35</strong>
+            <li className="flex justify-between">
+              เหรียญรางวัล <strong className="text-right">35</strong>
+            </li>
+            <li className="flex justify-between">
+              สถิติ <strong className="text-right">35</strong>
             </li>
           </ul>
+          <p className="absolute bottom-0 right-0 mb-4 mr-4 text-sm text-gray-500">
+            ดูเพิ่มเติม &gt;
+          </p>
         </div>
-
         {/* Card 4 - ของรางวัล */}
-        <div className="bg-white rounded-lg shadow-md p-6 col-span-2">
-          <h2 className="text-lg font-bold flex items-center mb-4">
-            ของรางวัล{" "}
-            <span className="ml-2 bg-blue-500 text-white px-2 py-1 rounded text-sm">
-              15
-            </span>
+        <div className="bg-white rounded-lg shadow-md p-6 col-span-2 relative">
+          <h2 className="text-lg font-bold flex justify-start items-center mb-4 border-b-2 border-gray-300 pb-2">
+            <Image
+              src="/asset/reward.svg" // ใช้ path ที่สัมพันธ์กับโฟลเดอร์ public
+              alt="fire"
+              width={32}
+              height={32}
+              className="mr-3"
+            />
+            ของรางวัล <span className="text-black text-lg ml-auto">35</span>
           </h2>
-          <ul className="text-sm space-y-2">
-            <li>
-              กล่องสุ่ม <strong>35</strong>
+          <ul className=" space-y-2">
+            <li className="flex justify-between">
+              <span className=" text-gray-600">จำนวน</span>
             </li>
-            <li>
-              แลกรางวัล <strong>35</strong>
+            <li className="flex justify-between">
+              กล่องสุ่ม <strong className="text-right">35</strong>
+            </li>
+            <li className="flex justify-between">
+              แลกรางวัล <strong className="text-right">35</strong>
             </li>
           </ul>
+          <p className="absolute bottom-0 right-0 mb-4 mr-4 text-sm text-gray-500">
+            ดูเพิ่มเติม &gt;
+          </p>
         </div>
       </div>
     </div>
