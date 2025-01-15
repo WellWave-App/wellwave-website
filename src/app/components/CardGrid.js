@@ -1,13 +1,23 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation"; // แก้จาก "next/router"
 
 export default function CardGrid() {
+  const router = useRouter();
+
+  const handleCardClick = (cardName) => {
+    // นำทางไปยังหน้าตามการ์ดที่คลิก
+    router.push(`/infoApp/${cardName}`);
+  };
   return (
     <div className="container mx-auto p-6  flex flex-col font-sans text-black">
       {/* Grid Layout */}
       <div className="grid grid-cols-[repeat(3,_minmax(250px,_1fr))] gap-4">
         {" "}
         {/* การ์ดภารกิจ (ยาวลงมาเต็มพื้นที่ตามแถว) */}
-        <div className="bg-white rounded-lg shadow-md p-6 row-span-2 flex flex-col space-y-4 h-[610px]  relative">
+        <div
+          className="bg-white rounded-lg shadow-md p-6 row-span-2 flex flex-col space-y-4 h-[610px]  relative"
+          onClick={() => handleCardClick("mission")}
+        >
           <h2 className="text-lg font-bold flex justify-start items-center mb-4 border-b-2 border-gray-300 pb-2 ">
             <Image
               src="/asset/fire.svg"
@@ -80,7 +90,10 @@ export default function CardGrid() {
           </p>
         </div>
         {/* Card 2 - บทความ */}
-        <div className="bg-white rounded-lg shadow-md p-6 relative">
+        <div
+          className="bg-white rounded-lg shadow-md p-6 relative"
+          onClick={() => handleCardClick("article")}
+        >
           <h2 className="text-lg font-bold flex justify-start items-center mb-4 border-b-2 border-gray-300 pb-2">
             <Image
               src="/asset/article.svg" // ใช้ path ที่สัมพันธ์กับโฟลเดอร์ public
@@ -117,7 +130,10 @@ export default function CardGrid() {
           </p>
         </div>
         {/* Card 3 - ความสำเร็จ */}
-        <div className="bg-white rounded-lg shadow-md p-6 relative">
+        <div
+          className="bg-white rounded-lg shadow-md p-6 relative"
+          onClick={() => handleCardClick("achievement")}
+        >
           <h2 className="text-lg font-bold flex justify-start items-center mb-4 border-b-2 border-gray-300 pb-2">
             <Image
               src="/asset/achieve.svg" // ใช้ path ที่สัมพันธ์กับโฟลเดอร์ public
@@ -144,7 +160,10 @@ export default function CardGrid() {
           </p>
         </div>
         {/* Card 4 - ของรางวัล */}
-        <div className="bg-white rounded-lg shadow-md p-6 col-span-2 relative">
+        <div
+          className="bg-white rounded-lg shadow-md p-6 col-span-2 relative"
+          onClick={() => handleCardClick("reward")}
+        >
           <h2 className="text-lg font-bold flex justify-start items-center mb-4 border-b-2 border-gray-300 pb-2">
             <Image
               src="/asset/reward.svg" // ใช้ path ที่สัมพันธ์กับโฟลเดอร์ public

@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
           <Link
             href="/User-info"
             className={`px-4 py-3 rounded-lg ${
-              pathname === '/view-data' ? 'bg-blue-100 text-blue-500' : 'text-gray-500'
+              pathname === '/User-info' ? 'bg-blue-100 text-blue-500' : 'text-gray-500'
             } font-bold text-sm`}
           >
             ข้อมูลผู้ใช้
