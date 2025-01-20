@@ -14,7 +14,7 @@ interface UserData {
 
 const usersData: UserData[] = [
   { id: 1, name: "ฟ้า [#UID450293]", category: "โรคอ้วน", successRate: 87, lastActive: "23 ตุลาคม 2567", status: "ใช้งานต่อเนื่อง 36 วัน" },
-  { id: 2, name: "มะลิ [#UID450294]", category: "โรคอ้วน", successRate: 76, lastActive: "21 ตุลาคม 2567", status: "ไม่ได้ใช้งาน 14 วัน" },
+  { id: 2, name: "มะลิ [#UID450294]", category: "โรคเบาหวาน", successRate: 76, lastActive: "21 ตุลาคม 2567", status: "ไม่ได้ใช้งาน 14 วัน" },
   { id: 3, name: "ปอ [#UID450295]", category: "โรคอ้วน", successRate: 92, lastActive: "22 ตุลาคม 2567", status: "ใช้งานต่อเนื่อง 12 วัน" },
   { id: 4, name: "ดาว [#UID450296]", category: "โรคอ้วน", successRate: 68, lastActive: "20 ตุลาคม 2567", status: "ไม่ได้ใช้งาน 8 วัน" },
 ];
@@ -53,7 +53,9 @@ const TableWithSort = () => {
     <div className="p-6 bg-gray-100 min-h-screen font-sans">
       <div className="bg-white shadow rounded-lg p-6 h-[600px] flex flex-col">
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-lg font-semibold">ข้อมูลผู้ใช้ ทั้งหมด {usersData.length} คน</h1>
+          <div className="flex justify-between items-center mt-4 mb-4" ><h1 className="text-xl font-bold text-gray-800">ข้อมูลผู้ใช้ ทั้งหมด {usersData.length} คน</h1>
+
+          </div>
         </div>
         <div className="relative">
           <input
@@ -109,9 +111,8 @@ const TableWithSort = () => {
                   <td className="py-2 px-4 border-b">{user.lastActive}</td>
                   <td className="py-2 px-4 border-b">
                     <span
-                      className={`py-1 px-2 rounded-lg text-sm ${
-                        user.status.includes("ไม่ได้") ? "bg-red-100 text-red-600" : "bg-green-100 text-green-600"
-                      }`}
+                      className={`py-1 px-2 rounded-lg text-sm ${user.status.includes("ไม่ได้") ? "bg-red-100 text-red-600" : "bg-green-100 text-green-600"
+                        }`}
                     >
                       {user.status}
                     </span>
