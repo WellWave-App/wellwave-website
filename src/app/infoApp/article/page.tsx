@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from "next/image";
 
 const ArticlesPage: React.FC = () => {
   const articles = Array(5).fill({
@@ -12,6 +13,18 @@ const ArticlesPage: React.FC = () => {
 
 
       <div className="rounded-lg p-6 bg-white  shadow-md">
+        <p className="text-gray-600 text-sm pb-3 flex items-center">
+          เพิ่มข้อมูล
+          <span style={{ margin: '0 8px' }}> &gt; </span> {/* สำหรับลูกศร ">" */}
+          <Image
+            src="/asset/article.svg"
+            alt="fire"
+            width={16}
+            height={16}
+            className="mr-1"
+          />
+          <span className="text-black">บทความ</span>
+        </p>
 
         <div className="flex justify-between items-center mb-6" ><h1 className="text-xl font-bold text-gray-800">บทความ ทั้งหมด 10 บทความ</h1>
           <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
@@ -27,7 +40,7 @@ const ArticlesPage: React.FC = () => {
             <button className="text-gray-600 hover:text-blue-600">อื่น ๆ</button>
           </nav>
         </div>
-        <div className="p-4 space-y-4 max-h-[400px] overflow-y-auto">
+        <div className="p-4 space-y-4 max-h-[350px] overflow-y-auto">
           {articles.map((article, index) => (
             <div
               key={index}
