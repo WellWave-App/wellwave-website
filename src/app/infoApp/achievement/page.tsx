@@ -1,42 +1,44 @@
 import React from 'react';
+import Image from "next/image";
 
-const SuccessPage: React.FC = () => {
+const ArticlesPage: React.FC = () => {
   const items = Array(10).fill({
     title: 'Title',
-    reward: 150,
+    views: 30,
+    description: 'รายละเอียดเนื้อหาของความสำเร็จแบบย่อๆ เพื่อแสดงในรายการความสำเร็จ...',
   });
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="container mx-auto py-6 px-4">
-        {/* Header */}
-        <header className="flex justify-between items-center bg-white p-4 rounded-md shadow">
-          <h1 className="text-xl font-bold text-gray-800">ความสำเร็จ ทั้งหมด 10 ความสำเร็จ</h1>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-            + เพิ่มความสำเร็จ
-          </button>
-        </header>
+    <div className="p-6 bg-gray-100 min-h-screen font-sans">
 
-        {/* Search and Tabs */}
-        <div className="mt-6 bg-white p-4 rounded-md shadow">
-          <div className="flex items-center justify-between">
-            <input
-              type="text"
-              placeholder="ค้นหา"
-              className="border border-gray-300 rounded-md px-3 py-2 w-full max-w-md"
-            />
-          </div>
-          <nav className="mt-4 flex space-x-4 border-b">
-            <button className="text-blue-600 border-b-2 border-blue-600 px-4 py-2">
-              ทั้งหมด
-            </button>
-            <button className="text-gray-600 hover:text-blue-600 px-4 py-2">เหรียญรางวัล</button>
-            <button className="text-gray-600 hover:text-blue-600 px-4 py-2">สถิติ</button>
+
+      <div className="rounded-lg p-6 bg-white  shadow-md">
+        <p className="text-gray-600 text-sm pb-3 flex items-center">
+          เพิ่มข้อมูล
+          <span style={{ margin: '0 8px' }}> &gt; </span> {/* สำหรับลูกศร ">" */}
+          <Image
+            src="/asset/achieve.svg"
+            alt="fire"
+            width={16}
+            height={16}
+            className="mr-1"
+          />
+          <span className="text-black">ความสำเร็จ</span>
+        </p>
+
+        <div className="flex justify-between items-center mb-6" ><h1 className="text-xl font-bold text-gray-800">ความสำเร็จ ทั้งหมด 10 ความสำเร็จ</h1>
+          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            + เพิ่มความสำเร็จ
+          </button></div>
+        <div className="flex items-center border-b">
+          <nav className="flex space-x-4 px-4 py-2">
+            <button className="text-blue-600 font-semibold border-b-2 border-blue-600">ทั้งหมด</button>
+            <button className="text-gray-600 hover:text-blue-600">เหรียญรางวัล</button>
+            <button className="text-gray-600 hover:text-blue-600">สถิติ</button>
+
           </nav>
         </div>
-
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-6 max-h-[350px] overflow-y-auto">
           {items.map((item, index) => (
             <div
               key={index}
@@ -56,19 +58,28 @@ const SuccessPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Pagination */}
-        <footer className="mt-6 flex justify-center">
-          <nav className="flex space-x-2">
-            <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">1</button>
-            <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">2</button>
-            <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">3</button>
-            <span className="px-3 py-1">...</span>
-            <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">20</button>
-          </nav>
+
+
+        <footer className="flex justify-between items-center mt-6">
+          {/* ข้อความ "แสดง 1-10 จาก X รายการ" ชิดซ้าย */}
+          <p className="text-gray-600 text-sm">แสดง 1-10 จาก {items.length} รายการ</p>
+
+          {/* ปุ่มเลขหน้า (pagination) ชิดขวา */}
+          <div className="flex space-x-2 ml-auto">
+            {[1, 2, 3, 4, 5].map((page) => (
+              <button key={page} className={`py-1 px-3 rounded-lg ${page === 1 ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"}`}>
+                {page}
+              </button>
+            ))}
+            <button className="py-1 px-3 bg-gray-200 text-gray-600 rounded-lg">...</button>
+          </div>
         </footer>
+
       </div>
     </div>
+
+
   );
 };
 
-export default SuccessPage;
+export default ArticlesPage;
