@@ -28,15 +28,37 @@ body {
   color: var(--foreground);
   background: var(--background);
 }
+
 .navbar {
   height: auto;
   padding: 0;
   margin: 0;
 }
 
+/* 
 body {
   overflow: hidden;
-}
+} */
 * {
   box-sizing: border-box;
+}
+
+/* เพิ่มคลาสนี้ในไฟล์ CSS ของคุณ */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #F5F5F5;
+  border-radius: 10px;
+  /* ขอบมน */
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #4874D7;
+  /* สีน้ำเงิน */
+  border-radius: 10px;
+  /* ขอบมน */
+  /* border: 2px solid #ffffff; */
+  /* ขอบขาว */
 }
