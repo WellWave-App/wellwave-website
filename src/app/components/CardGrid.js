@@ -9,13 +9,13 @@ export default function CardGrid() {
     router.push(`/infoApp/${cardName}`);
   };
   return (
-    <div className="container mx-auto p-6  flex flex-col font-sans text-black">
+    <div className=" container top-0 px-28 py-6   flex flex-col font-sans text-black">
       {/* Grid Layout */}
       <div className="grid grid-cols-[repeat(3,_minmax(250px,_1fr))] gap-4">
         {" "}
         {/* การ์ดภารกิจ (ยาวลงมาเต็มพื้นที่ตามแถว) */}
         <div
-          className="bg-white rounded-lg shadow-md p-6 row-span-2 flex flex-col space-y-4 h-[610px]  relative cursor-pointer"
+          className="bg-white rounded-lg shadow-md p-6 row-span-2 flex flex-col mt-16 space-y-4 h-[600px]  relative cursor-pointer"
           onClick={() => handleCardClick("mission")}
         >
           <h2 className="text-xl font-bold flex justify-start items-center mb-4 border-b-2 border-gray-300 pb-2 ">
@@ -91,7 +91,7 @@ export default function CardGrid() {
         </div>
         {/* Card 2 - บทความ */}
         <div
-          className="bg-white rounded-lg shadow-md p-6 relative cursor-pointer"
+          className="bg-white rounded-lg shadow-md p-6 mt-16 relative cursor-pointer"
           onClick={() => handleCardClick("article")}
         >
           <h2 className="text-xl font-bold flex justify-start items-center mb-4 border-b-2 border-gray-300 pb-2">
@@ -131,7 +131,7 @@ export default function CardGrid() {
         </div>
         {/* Card 3 - ความสำเร็จ */}
         <div
-          className="bg-white rounded-lg shadow-md p-6 relative cursor-pointer"
+          className="bg-white rounded-lg shadow-md p-6 mt-16 relative cursor-pointer"
           onClick={() => handleCardClick("achievement")}
         >
           <h2 className="text-xl font-bold flex justify-start items-center mb-4 border-b-2 border-gray-300 pb-2">

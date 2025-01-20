@@ -50,8 +50,8 @@ const TableWithSort = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen font-sans">
-      <div className="bg-white shadow rounded-lg p-6 h-[600px] flex flex-col">
+    <div className="p-6 top-0 px-28 py-6  bg-gray-100 min-h-screen font-sans">
+      <div className="bg-white shadow rounded-lg p-6  mt-16 h-[600px] flex flex-col">
         <div className="flex justify-between items-center mb-4">
           <div className="flex justify-between items-center mt-4 mb-4" ><h1 className="text-xl font-bold text-gray-800">ข้อมูลผู้ใช้ ทั้งหมด {usersData.length} คน</h1>
 
@@ -71,8 +71,8 @@ const TableWithSort = () => {
         </div>
         <div className="overflow-auto flex-grow mt-4">
           <table className="w-full border-collapse">
-            <thead>
-              <tr className="text-left text-gray-600 bg-white">
+            <thead className="sticky top-0 bg-white">
+              <tr>
                 <th className="py-2 px-4 border-b cursor-pointer" onClick={() => handleSort("name")}>
                   ชื่อผู้ใช้ {getIcon("name")}
                 </th>
