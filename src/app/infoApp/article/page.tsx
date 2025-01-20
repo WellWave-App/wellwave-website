@@ -1,5 +1,9 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import FileUpload from "../../components/upload";
 
 const ArticlesPage: React.FC = () => {
   const articles = Array(5).fill({
@@ -7,29 +11,88 @@ const ArticlesPage: React.FC = () => {
     views: 30,
     description: 'รายละเอียดเนื้อหาของบทความแบบย่อๆ เพื่อแสดงในรายการบทความ...',
   });
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  // const [amount, setAmount] = useState(1);
+  // const [duration, setDuration] = useState(3);
+  // const [sortedData, setSortedData] = useState<Task[]>(taskData);
+  // const [sortConfig, setSortConfig] = useState<{ column: keyof Task | null; direction: number }>({
+  //   column: null,
+  //   direction: 0, // 0: default, 1: ascending, 2: descending
+  // });
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen font-sans">
+    <div className="top-0 px-28 py-6 bg-gray-100 min-h-screen font-sans">
 
 
-      <div className="rounded-lg p-6 bg-white  shadow-md">
-        <p className="text-gray-600 text-sm pb-3 flex items-center">
-          เพิ่มข้อมูล
-          <span style={{ margin: '0 8px' }}> &gt; </span> {/* สำหรับลูกศร ">" */}
+      <div className="rounded-lg p-6 mt-16 h-[600px] mt bg-white  shadow-md">
+        <p
+          className="text-gray-600 text-sm pb-3 flex items-center cursor-pointer group"
+          onClick={() => router.back()} // ย้อนกลับ
+        >
+          <span className="hover:underline inline-flex items-center group-hover:text-black">
+            เพิ่มข้อมูล</span>
+          <span style={{ margin: "0 8px" }}> &gt; </span>
           <Image
             src="/asset/article.svg"
-            alt="fire"
+            alt="article"
             width={16}
             height={16}
             className="mr-1"
           />
           <span className="text-black">บทความ</span>
+
         </p>
 
+
         <div className="flex justify-between items-center mb-6" ><h1 className="text-xl font-bold text-gray-800">บทความ ทั้งหมด 10 บทความ</h1>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={() => setIsOpen(true)}>
             + เพิ่มบทความ
-          </button></div>
+          </button> {/* Popup */}
+          {isOpen && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 ">
+              <div className="bg-white rounded-lg shadow max-w-[600px] w-full max-h-[600px] p-6 m-18">                {/* Header */}
+                <div className="flex justify-between items-center border-b pb-3">
+                  <h2 className="text-lg font-semibold">เพิ่มบทความ</h2>
+                  <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-gray-700">
+                    ✖
+                  </button>
+                </div>
+
+                {/* Form ใน Popup */}
+                <div className="mt-4 space-y-4  max-h-[500px] overflow-y-auto  scrollbar-custom pr-2 ">
+
+                  <label className="block text-gray-700">ชื่อบทความ</label>
+                  <input type="text" className="w-full border rounded p-2" placeholder="ชื่อบทความ" />
+                  <label className="block text-gray-700">ประเภทบทความ</label>
+                  <select className="w-full border rounded p-2 ">
+                    <option>บทความปรับนิสัย</option>
+
+                    <option>เควส</option>
+                  </select>
+
+
+                  <label className="block text-gray-700">รายละเอียด</label>
+                  <input type="text" className="w-full border rounded p-2" placeholder="รายละเอียด" />
+
+                  <label className="block text-gray-700">รูปภาพบทความ</label>
+
+                  <FileUpload />
+
+
+                  {/* ปุ่ม */}
+                  <div className="flex justify-end gap-2 mt-4">
+                    <button onClick={() => setIsOpen(false)} className="px-4 py-2 text-gray-500 hover:text-gray-700">
+                      ยกเลิก
+                    </button>
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                      ยืนยัน
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}</div>
         <div className="flex items-center border-b">
           <nav className="flex space-x-4 px-4 py-2">
             <button className="text-blue-600 font-semibold border-b-2 border-blue-600">ทั้งหมด</button>
@@ -40,7 +103,7 @@ const ArticlesPage: React.FC = () => {
             <button className="text-gray-600 hover:text-blue-600">อื่น ๆ</button>
           </nav>
         </div>
-        <div className="p-4 space-y-4 max-h-[350px] overflow-y-auto">
+        <div className="p-4 space-y-4 max-h-[350px] overflow-y-auto scrollbar-custom pr-2">
           {articles.map((article, index) => (
             <div
               key={index}
