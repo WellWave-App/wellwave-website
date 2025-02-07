@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from "next/image";
-import FileUpload from "../../components/upload";
+import AddArticleModal from "../../components/article/addArticleModel";
 import { useRouter } from "next/navigation";
 interface Disease {
   DISEASE_ID: number;
@@ -42,7 +42,10 @@ const ArticlePage = () => {
     total: 0,
     totalPages: 1
   });
-
+  const handleArticleCreated = () => {
+    // Refresh article list
+    fetchArticles(selectedDiseaseId, currentPage);
+  };
   const fetchArticles = async (diseaseId: number | null, page: number) => {
     setLoading(true);
     try {
@@ -167,46 +170,12 @@ const ArticlePage = () => {
             + เพิ่มบทความ
           </button>
         </div>
-        {isOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 ">
-            <div className="bg-white rounded-lg shadow max-w-[600px] w-full max-h-[600px] p-6 m-18">
-              {/* Popup Header */}
-              <div className="flex justify-between items-center border-b pb-3">
-                <h2 className="text-lg font-semibold">เพิ่มบทความ</h2>
-                <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-gray-700">
-                  ✖
-                </button>
-              </div>
+        <AddArticleModal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          onSuccess={handleArticleCreated}
+        />
 
-              {/* Form Inside Popup */}
-              <div className="mt-4 space-y-4  max-h-[500px] overflow-y-auto scrollbar-custom pr-2 ">
-                <label className="block text-gray-700">ชื่อบทความ</label>
-                <input type="text" className="w-full border rounded p-2" placeholder="ชื่อบทความ" />
-                <label className="block text-gray-700">ประเภทบทความ</label>
-                <select className="w-full border rounded p-2 ">
-                  <option>บทความปรับนิสัย</option>
-                  <option>เควส</option>
-                </select>
-
-                <label className="block text-gray-700">รายละเอียด</label>
-                <input type="text" className="w-full border rounded p-2" placeholder="รายละเอียด" />
-
-                <label className="block text-gray-700">รูปภาพบทความ</label>
-                <FileUpload />
-
-                {/* Buttons */}
-                <div className="flex justify-end gap-2 mt-4">
-                  <button onClick={() => setIsOpen(false)} className="px-4 py-2 text-gray-500 hover:text-gray-700">
-                    ยกเลิก
-                  </button>
-                  <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                    ยืนยัน
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
         <div className="relative mt-4">
           <input
             type="text"

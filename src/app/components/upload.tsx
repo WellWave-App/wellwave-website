@@ -1,9 +1,13 @@
 import React, { useState, useCallback } from 'react';
 
-const FileUpload: React.FC = () => {
+interface FileUploadProps {
+  onFileSelect: (file: File | null) => void; // Prop to send the selected file to the parent
+}
+
+const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect }) => {
   const [file, setFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  
+
   const handleDrag = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -40,6 +44,7 @@ const FileUpload: React.FC = () => {
       }
 
       setFile(file);
+      onFileSelect(file); 
     }
   };
 
