@@ -66,106 +66,12 @@ const UserDetailPage = ({ params }: { params: { id: string } }) => {
         risks: ['โรคเบาหวาน', 'โรคความดันโลหิตสูง', 'โรคอ้วน', 'โรคไขมันในเลือดสูง'],
     };
 
-    //     const getIcon = (column: keyof Task) => {
-    //         if (sortConfig.column !== column) return <FaSort className="inline" />;
-    //         if (sortConfig.direction === 1) return <FaSortUp className="inline" />;
-    //         if (sortConfig.direction === 2) return <FaSortDown className="inline" />;
-    //         return <FaSort className="inline" />;
-    //       };
-    // //   const [amount, setAmount] = useState(1);
-    // //    const [duration, setDuration] = useState(3);
-    //    const [sortedData, setSortedData] = useState<Task[]>(taskData);
-    //    const [sortConfig, setSortConfig] = useState<{ column: keyof Task | null; direction: number }>({
-    //      column: null,
-    //      direction: 0, // 0: default, 1: ascending, 2: descending
-    //    });
-    // //    const router = useRouter();
-    // //    const [isOpen, setIsOpen] = useState(false);
-    //    const handleSort = (column: keyof Task) => {
-    //      // กำหนดลำดับที่ต้องการสำหรับความรู้สึก
-    //      const feelingsOrder = ['กดดัน', 'ท้อแท้', 'เฉยๆ', 'พอใจ', 'สดใส'];
-
-    //      setSortConfig((prev) => {
-    //        const newDirection = prev.column === column ? (prev.direction + 1) % 3 : 1;
-    //        const sorted = [...sortedData].sort((a, b) => {
-    //          if (newDirection === 0) return 0; // Default (No Sort)
-    //          if (typeof a[column] === "number") {
-    //            return newDirection === 1
-    //              ? (a[column] as number) - (b[column] as number)
-    //              : (b[column] as number) - (a[column] as number);
-    //          }
-
-    //          // กรณีที่ column เป็นความรู้สึก
-    //          if (column === "status") {
-    //            const indexA = feelingsOrder.indexOf(a[column]);
-    //            const indexB = feelingsOrder.indexOf(b[column]);
-
-    //            return newDirection === 1
-    //              ? indexA - indexB
-    //              : indexB - indexA;
-    //          }
-
-    //          // สำหรับกรณีอื่น ๆ ใช้ localeCompare
-    //          return newDirection === 1
-    //            ? String(a[column]).localeCompare(String(b[column]), 'th')
-    //            : String(b[column]).localeCompare(String(a[column]), 'th');
-    //        });
-
-    //        setSortedData(sorted);
-    //        return { column, direction: newDirection };
-    //      });
-    //    };
-
-    //   return (
-    //     <div className="container mx-auto p-6">
-    //       <h1 className="text-xl font-bold">ข้อมูลผู้ใช้ #{user.id}</h1>
-    //       <div className="grid grid-cols-2 gap-6">
-    //         <div className="bg-white shadow-md p-6 rounded-lg">
-    //           <h2 className="text-lg font-semibold">รายละเอียดผู้ใช้</h2>
-    //           <p><strong>ชื่อ:</strong> {user.name}</p>
-    //           <p><strong>Email:</strong> {user.email}</p>
-    //           <p><strong>ชื่อผู้ใช้:</strong> {user.username}</p>
-    //           <p><strong>เพศ:</strong> {user.gender}</p>
-    //           <p><strong>อายุ:</strong> {user.age} ปี</p>
-    //           <p><strong>ส่วนสูง:</strong> {user.height} ซม.</p>
-    //           <p><strong>น้ำหนัก:</strong> {user.weight} กก.</p>
-    //         </div>
-    //         <div className="bg-white shadow-md p-6 rounded-lg">
-    //           <h2 className="text-lg font-semibold">คะแนนและสะสม</h2>
-    //           <p><strong>คะแนน:</strong> {user.scores.points}</p>
-    //           <p><strong>อัญมณี:</strong> {user.scores.gems}</p>
-    //           <p><strong>ระดับปัจจุบัน:</strong> {user.scores.level}</p>
-    //         </div>
-    //       </div>
-    //       <div className="bg-white shadow-md p-6 rounded-lg mt-6">
-    //         <h2 className="text-lg font-semibold">ภาวะเสี่ยง</h2>
-    //         <div className="flex gap-2">
-    //           {user.risks.map((risk, index) => (
-    //             <span key={index} className="px-3 py-1 bg-red-200 rounded-full">{risk}</span>
-    //           ))}
-    //         </div>
-    //       </div>
-    //       <div className="bg-white shadow-md p-6 rounded-lg mt-6">
-    //         <h2 className="text-lg font-semibold">รางวัล</h2>
-    //         <div className="flex gap-4">
-    //           {user.achievements.map((achieve, index) => (
-    //             <span key={index} className="px-4 py-2 bg-gray-300 rounded-lg">{achieve.title}</span>
-    //           ))}
-    //         </div>
-    //       </div>
-    //     </div>
-    //   );
-    // };
-
-    // const [amount, setAmount] = useState(1);
-    //   const [duration, setDuration] = useState(3);
     const [sortedData, setSortedData] = useState<Task[]>(taskData);
     const [sortConfig, setSortConfig] = useState<{ column: keyof Task | null; direction: number }>({
         column: null,
         direction: 0, // 0: default, 1: ascending, 2: descending
     });
-    //   const router = useRouter();
-    //   const [isOpen, setIsOpen] = useState(false);
+   
     const handleSort = (column: keyof Task) => {
         // กำหนดลำดับที่ต้องการสำหรับความรู้สึก
         const feelingsOrder = ['กดดัน', 'ท้อแท้', 'เฉยๆ', 'พอใจ', 'สดใส'];
