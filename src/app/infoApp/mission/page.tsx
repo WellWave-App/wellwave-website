@@ -3,7 +3,7 @@ import { Task } from "@mui/icons-material";
 import React, { useState } from "react";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import Image from "next/image";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import FileUpload from "../../components/upload";
 interface Task {
   name: string;
@@ -217,7 +217,9 @@ const TaskPage = () => {
                   </div>
                   <label className="block text-gray-700">รูปภาพภารกิจ</label>
 
-                  <FileUpload />
+                  <FileUpload onFileSelect={function (): void {
+                    throw new Error("Function not implemented.");
+                  }} />
 
 
                   {/* ปุ่ม */}

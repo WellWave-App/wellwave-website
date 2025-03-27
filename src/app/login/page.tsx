@@ -21,7 +21,7 @@ const Login = () => {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:3001/auth/login", {
+            const response = await fetch("http://localhost:3000/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -56,13 +56,13 @@ const Login = () => {
             setError('Failed to login');
         }
     };
-    
+
     const [otp, setOtp] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [step, setStep] = useState<"login" | "forgot" | "otp" | "reset" | "success">("login");
 
-    
+
     const handleSendResetLink = (e: React.FormEvent) => {
         e.preventDefault();
         alert(`📩 ส่งลิงก์รีเซ็ตรหัสไปที่ ${email}`);

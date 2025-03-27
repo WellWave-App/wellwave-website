@@ -1,16 +1,101 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import FileUpload from "../../components/upload";
 import { IoMdTrash } from "react-icons/io";
 
-const ArticlesPage: React.FC = () => {
-  const items = Array(10).fill({
-    title: 'Title',
-    views: 30,
-    description: 'รายละเอียดเนื้อหาของความสำเร็จแบบย่อๆ เพื่อแสดงในรายการความสำเร็จ...',
+interface Reward {
+  EXP: number;
+  GEMS: number;
+}
+
+interface Level {
+  ACH_ID: string;
+  LEVEL: number;
+  ICON_URL: string;
+  TARGET_VALUE: number;
+  REWARDS: Reward;
+}
+
+interface Achievement {
+  ACH_ID: string;
+  TITLE: string;
+  DESCRIPTION: string;
+  ACHIEVEMENTS_TYPE: string;
+  levels: Level[];
+}
+interface MetaData {
+  total: number;
+  totalPages: number;
+  page: number;
+  limit: number;
+}
+interface AchievementsData {
+  data: Achievement[]; meta: MetaData;
+}
+const Achievements = () => {
+  const [achievements, setAchievements] = useState<Achievement[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [pagination, setPagination] = useState({
+    total: 0,
+    totalPages: 1
   });
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    const fetchAchievements = async () => {
+      setLoading(true); // ตั้งค่าการโหลด
+      try {
+
+        const token = localStorage.getItem("accessToken");
+        console.log("Token:", token); // ตรวจสอบ token ว่าได้มาหรือไม่
+        if (!token) {
+          setError("No token found, please login.");
+          setLoading(false);
+          return;
+        }
+
+        const response = await fetch(`http://localhost:3000/achievement`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+
+
+        // เช็คว่า response เป็น 200 หรือไม่
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data: AchievementsData = await response.json(); // ใช้ Interface ที่ประกาศไว้
+        console.log("Fetched data:", data); // เช็คข้อมูลที่ได้รับจาก API
+
+        if (response.ok) {
+          setAchievements(data.data); // ตั้งค่า achievements
+          setPagination({
+            total: data.meta.total,
+            totalPages: data.meta.totalPages
+          });
+
+        } else {
+          setError('No achievements data found');
+        }
+      } catch (error) {
+        console.error('Error fetching achievements:', error);
+        setError('Failed to fetch achievements');
+      } finally {
+        setLoading(false); // ปิดสถานะโหลดในทุกกรณี
+      }
+    };
+
+    fetchAchievements();
+  }, []);
+
+
+
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   // const [duration, setDuration] = useState(3);
@@ -29,7 +114,34 @@ const ArticlesPage: React.FC = () => {
   const deleteLevel = (levelToDelete: number) => {
     setLevels(levels.filter(level => level.level !== levelToDelete));
   };
+  const Pagination = () => {
+    const startItem = pagination.total > 0 ? (currentPage - 1) * 10 + 1 : 0;
+    const endItem = Math.min(currentPage * 10, pagination.total);
 
+    return (
+      <footer className="fixed justify-between w-5/6 bottom-12 mb-2">
+        <div className="flex justify-between items-center w-full">
+          <p className="text-gray-600 text-sm">
+            แสดง {startItem} - {endItem} จาก {pagination.total} รายการ
+          </p>
+          <div className="flex space-x-2 pr-4">
+            {Array.from({ length: pagination.totalPages }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentPage(index + 1)}
+                className={`py-1 px-3 rounded-lg transition-colors duration-200
+                  ${currentPage === index + 1
+                    ? "bg-blue-500 text-white hover:bg-blue-600"
+                    : "bg-gray-200 text-gray-600 hover:bg-gray-300"}`}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        </div>
+      </footer>
+    );
+  };
   // ฟังก์ชันอัพเดต duration สำหรับระดับต่างๆ
   const handleDurationChange = (index: number, value: number) => {
     const updatedLevels = levels.map((lvl, i) =>
@@ -37,6 +149,9 @@ const ArticlesPage: React.FC = () => {
     );
     setLevels(updatedLevels);
   };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
   return (
     <div className="top-0 px-28 py-6 p-6 bg-gray-100 min-h-screen font-sans">
 
@@ -108,7 +223,9 @@ const ArticlesPage: React.FC = () => {
                       </div>
 
                       {/* ส่วนของการกรอกข้อมูลสำหรับระดับ */}
-                      <FileUpload />
+                      <FileUpload onFileSelect={function (): void {
+                        throw new Error('Function not implemented.');
+                      }} />
                       <div className="flex gap-2 items-center">
                         <select className="border rounded p-2">
                           <option>Gem</option>
@@ -134,7 +251,7 @@ const ArticlesPage: React.FC = () => {
                   ))}
 
                   {/* ปุ่ม */}
-                  <div className="flex justify-between mt-4">
+                  <div className="flex justify-between mt-2">
                     <button onClick={addLevel} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                       + เพิ่มระดับ
                     </button>
@@ -152,49 +269,49 @@ const ArticlesPage: React.FC = () => {
               </div>
             </div>
           )}</div>
-        <div className="flex items-center border-b">
-          <nav className="flex space-x-4 px-4 py-2">
-            <button className="text-blue-600 font-semibold border-b-2 border-blue-600">ทั้งหมด</button>
-            <button className="text-gray-600 hover:text-blue-600">เหรียญรางวัล</button>
-            <button className="text-gray-600 hover:text-blue-600">สถิติ</button>
 
-          </nav>
+        <div className="relative mt-4 mb-3">
+          <input
+            type="text"
+            placeholder="ค้นหา"
+            className="rounded-lg bg-gray-100 px-10 py-2 w-full focus:outline-none focus:ring focus:ring-blue-300"
+          />
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-4.35-4.35M16.5 10.5a6 6 0 11-12 0 6 6 0 0112 0z" />
+            </svg>
+          </span>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 max-h-[360px] overflow-y-auto  scrollbar-custom pr-2">
-          {items.map((item, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-md shadow p-4 mb-2 mt-2 flex items-center hover:shadow-lg transition"
-            >
-              <div className="w-16 h-16 bg-gray-200 rounded-md flex-shrink-0"></div>
-              <div className="ml-4 flex-grow">
-                <h2 className="text-lg font-bold">{item.title}</h2>
-                <p className="text-gray-600">
-                  รางวัลที่จะได้รับ: <span className="text-yellow-500">🪙 {item.reward}</span>
-                </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 max-h-[360px] overflow-y-auto scrollbar-custom pr-2">
+          {achievements && achievements.length > 0 ? (
+            achievements.map((achievement, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-md shadow p-4 flex items-center hover:shadow-lg transition border border-gray-300 mx-2 my-4"
+              >
+                <div className="w-16 h-16 bg-red-200 rounded-md flex-shrink-0"></div>
+                <div className="ml-4 flex-grow">
+                  <h2 className="text-lg font-bold">{achievement.TITLE}</h2>
+
+                  <p className="text-gray-600">
+                    เงื่อนไข: <span > {achievement.DESCRIPTION}</span>
+                  </p>
+
+                </div>
+                <button className="text-gray-500 hover:text-gray-700">
+                  ...
+                </button>
               </div>
-              <button className="text-gray-500 hover:text-gray-700">
-                ...
-              </button>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="text-gray-600">ไม่มีข้อมูล achievement</p>
+          )}
         </div>
 
 
-        <footer className="flex justify-between items-center mt-6">
-          {/* ข้อความ "แสดง 1-10 จาก X รายการ" ชิดซ้าย */}
-          <p className="text-gray-600 text-sm">แสดง 1-10 จาก {items.length} รายการ</p>
 
-          {/* ปุ่มเลขหน้า (pagination) ชิดขวา */}
-          <div className="flex space-x-2 ml-auto">
-            {[1, 2, 3, 4, 5].map((page) => (
-              <button key={page} className={`py-1 px-3 rounded-lg ${page === 1 ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"}`}>
-                {page}
-              </button>
-            ))}
-            <button className="py-1 px-3 bg-gray-200 text-gray-600 rounded-lg">...</button>
-          </div>
-        </footer>
+
+        <Pagination />
 
 
       </div>
@@ -204,4 +321,4 @@ const ArticlesPage: React.FC = () => {
   );
 };
 
-export default ArticlesPage;
+export default Achievements;

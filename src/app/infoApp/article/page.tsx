@@ -50,7 +50,7 @@ const ArticlePage = () => {
     setLoading(true);
     try {
       const limit = 10;
-      const url = `http://localhost:3001/article/search?${diseaseId ? `diseaseIds=${diseaseId}&` : ''}page=${page}&limit=${limit}`;
+      const url = `http://localhost:3000/article/search?${diseaseId ? `diseaseIds=${diseaseId}&` : ''}page=${page}&limit=${limit}`;
       const response = await fetch(url);
       const data = await response.json();
 
@@ -85,12 +85,12 @@ const ArticlePage = () => {
           {articles.map((article) => (
             <li key={article.AID} className="flex items-start bg-white rounded-lg shadow hover:shadow-lg mb-3">
               <div className="w-32 h-32 bg-gray-200 flex items-center justify-center rounded-l-lg">
-                <Image
-                  src={`http://localhost:3001${article.THUMBNAIL_URL}`}
+                {/* <Image
+                  src={`http://localhost:3000$/get-image/{article.THUMBNAIL_URL}`}
                   alt="article-thumbnail"
                   width={128}
                   height={128}
-                />
+                /> */}
               </div>
               <div className="ml-4 flex-grow">
                 <h2 className="text-lg font-bold text-gray-800 mt-4">{article.TOPIC}</h2>

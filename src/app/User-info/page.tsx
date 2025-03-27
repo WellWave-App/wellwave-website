@@ -39,7 +39,7 @@ const UserList = () => {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:3001/users/lists?limit=100", {
+        const response = await fetch("http://localhost:3000/users/lists?limit=100", {
           method: "GET",
           credentials: "include",
           headers: token ? { Authorization: `Bearer ${token}` } : {},
@@ -120,8 +120,10 @@ const UserList = () => {
     return <p>ไม่มีข้อมูลผู้ใช้</p>;
   }
   const handleRowClick = (UID: number) => {
-    router.push(`/user/${UID}`); 
+    console.log(`User ID: ${UID}`); // เช็คว่า UID ถูกส่งเข้ามาถูกต้อง
+    router.push(`/user/${UID}`); // ไปที่หน้าโปรไฟล์ของผู้ใช้
   };
+
   return (
     <div className="top-0 px-28 py-6 bg-gray-100 min-h-screen font-sans">
       <div className="rounded-lg p-6 mt-16 h-[600px] bg-white shadow-md">
