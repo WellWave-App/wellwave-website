@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
-import CardGrid from "../components/CardGrid";
+import CardGrid from "./CardGrid";
 const Dashboard = () => {
   return (
     <div className="min-h-screen  bg-gray-100">
