@@ -3,8 +3,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import ProgressCircle from "../../components/widget/progressCircle";
-import LineChartSample2 from "../../components/widget/lineChart";
+import ProgressCircle from "../../User-info/widget/progressCircle";
+import LineChartSample2 from "../../User-info/widget/lineChart";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 
 import { useParams, useRouter } from "next/navigation";

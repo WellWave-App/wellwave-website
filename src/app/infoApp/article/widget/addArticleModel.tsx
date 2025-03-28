@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import FileUpload from "../upload";
-import { createArticle } from '../../services/article/articleService';
+import FileUpload from "../../../components/upload";
+import { createArticle } from '../../../services/article/articleService';
 
 interface AddArticleModalProps {
     isOpen: boolean;

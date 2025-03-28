@@ -6,6 +6,8 @@ import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import FileUpload from "../../components/upload";
+import AddRandomBox from "./widget/addRandomBox";
+import AddExchange from "./widget/addExchange";
 
 interface ExpBooster {
   ITEM_ID: number;
@@ -53,6 +55,7 @@ const ShopItems = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -102,6 +105,10 @@ const ShopItems = () => {
     mystery_box: "/asset/boost.svg",
   };
 
+  const handleConfirm = () => {
+    console.log('ยืนยันแล้ว!');
+    setIsRandomBoxModalOpen(false); // ปิด Modal เมื่อกดปุ่มยืนยัน
+  };
 
   return (
     <div className="top-0 px-28 py-6 bg-gray-100 h-screen font-sans">
@@ -188,7 +195,19 @@ const ShopItems = () => {
             + {activeTab === "randomBox" ? "เพิ่มเกณฑ์รางวัล" : "เพิ่มรายการแลกเปลี่ยน"}
           </button>
 
+          {isRandomBoxModalOpen && (
+            <AddRandomBox
+              isRandomBoxModalOpen={isRandomBoxModalOpen}
+              setIsRandomBoxModalOpen={setIsRandomBoxModalOpen}
+              onConfirm={handleConfirm}
+            />
+          )}
 
+          {isExchangeModalOpen && (
+            <AddExchange
+              isExchangeModalOpen={isExchangeModalOpen}
+              setIsExchangeModalOpen={setIsExchangeModalOpen}
+            />)}
         </div>
 
 

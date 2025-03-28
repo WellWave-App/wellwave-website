@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from "next/image";
-import AddArticleModal from "../../components/article/addArticleModel";
+import AddArticleModal from "./widget/addArticleModel";
 import { useRouter } from "next/navigation";
 interface Disease {
   DISEASE_ID: number;

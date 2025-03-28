@@ -1,6 +1,6 @@
 // components/TaskForm.tsx
 import React, { useState } from 'react';
-import FileUpload from "../../../components/upload";
+import FileUpload from '../../../components/upload';
 
 interface TaskFormProps {
   isOpen: boolean;
@@ -65,8 +65,9 @@ const TaskForm: React.FC<TaskFormProps> = ({ setIsOpen }) => {
           </div>
 
           {/* Other form elements */}
-          <FileUpload />
-
+          <FileUpload
+            onFileSelect={(file) => setFormData({ ...formData, file })}
+          />
           {/* Buttons */}
           <div className="flex justify-end gap-2 mt-4">
             <button onClick={() => setIsOpen(false)} className="px-4 py-2 text-gray-500 hover:text-gray-700">
