@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
         </li>
         <li>
           <Link
-            href="/user-info"
+            href="/User-info"
             className={`px-4 py-3 rounded-lg ${pathname === '/user-info' ? 'bg-blue-100 text-blue-500' : 'text-gray-500'
               } font-bold text-sm`}
           >
