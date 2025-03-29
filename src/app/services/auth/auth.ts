@@ -1,8 +1,12 @@
 export const handleLogout = async () => {
     try {
         const response = await fetch('http://localhost:3000/auth/logout', {
-            method: 'POST',
+            method: 'GET',
             credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("accessToken")}` // ถ้าต้องการใช้ Token ใน Header
+            },
         });
 
         console.log('Response status:', response.status);
