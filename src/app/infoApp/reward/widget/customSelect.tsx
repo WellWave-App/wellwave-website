@@ -32,7 +32,7 @@ const CustomSelect = ({
 
     // Update the parent component's state
     onChange({
-      itemType: selectedOption === "Gem" ? "gem_exchange" : "exp_boost",
+      itemType: selectedOption === "gem_exchange" ? "gem_exchange" : "exp_boost",
       gemValue: value,
       boostPercentage,
       boostDays,
@@ -45,11 +45,11 @@ const CustomSelect = ({
       setIsOpen(false);
 
       // Reset values when switching between types
-      if (value === "Gem" && selectedOption !== "Gem") {
+      if (value === "gem_exchange" && selectedOption !== "gem_exchange") {
         setGemValue(undefined);
         setBoostPercentage(undefined);
         setBoostDays(undefined);
-      } else if (value === "Booster" && selectedOption !== "Booster") {
+      } else if (value === "exp_boost" && selectedOption !== "exp_boost") {
         setGemValue(undefined);
         setBoostPercentage(undefined);
         setBoostDays(undefined);

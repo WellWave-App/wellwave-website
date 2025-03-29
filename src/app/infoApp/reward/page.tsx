@@ -212,92 +212,104 @@ const ShopItems = () => {
 
 
         {activeTab === "randomBox" && (
-          <div>
-            <table className="w-full border-collapse overflow-y-auto flex-grow">
-              <thead className="sticky top-0 bg-white">
+          <div className="rounded">
+            <table className="w-full border-collapse">
+              <thead className="bg-white">
                 <tr className="text-left text-gray-600">
-                  <th className="py-2 px-4 border-b cursor-pointer" >
+                  <th className="py-2 px-4 border-b cursor-pointer w-3/4">
                     ของรางวัลที่จะได้รับ
                   </th>
-                  <th className="py-2 px-4 border-b cursor-pointer" >
+                  <th className="py-2 px-14 border-b cursor-pointer w-1/4 text-center">
                     อัตราการเกิด
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                {Array.isArray(items) &&
-                  items.map((item) => (
-                    item.mysteryBoxes?.map((box, index) => (
-                      <tr key={`${item.ITEM_ID}-${index}`} className="text-sm text-gray-700">
-                        <td className="py-2 px-4 border-b">
-                          <div className="flex items-center space-x-3">
-                            <div className="flex items-center space-x-3">
-                              <Image src={itemImages[item.ITEM_TYPE] || "/asset/boost.svg"} alt={item.ITEM_TYPE} width={24} height={24} />
-                              <span>{item.ITEM_TYPE === 'gem_exchange' && (
-                                <p>{item.gemExchange?.GEM_REWARD} Gem</p>
-                              )}
-                                {item.ITEM_TYPE === 'exp_boost' && (
-                                  <p>เพิ่ม EXP {item.expBooster?.BOOST_MULTIPLIER} เท่า เป็นจำนวน  {item.expBooster?.BOOST_DAYS} วัน</p>
-                                )}</span>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-2 px-14 border-b">{(item.RARITY * 100).toFixed(0)}%</td>
-                      </tr>
-                    ))
-                  ))}
-              </tbody>
             </table>
+            <div className="max-h-[220px] overflow-y-auto scrollbar-custom">
+              <table className="w-full border-collapse">
+                <tbody>
+                  {Array.isArray(items) &&
+                    items.map((item) => (
+                      item.mysteryBoxes?.map((box, index) => (
+                        <tr key={`${item.ITEM_ID}-${index}`} className="text-sm text-gray-700 hover:bg-gray-50">
+                          <td className="py-2 px-4 border-b w-3/4">
+                            <div className="flex items-center space-x-3">
+                              <div className="flex items-center space-x-3">
+                                <Image src={itemImages[item.ITEM_TYPE] || "/asset/boost.svg"} alt={item.ITEM_TYPE} width={24} height={24} />
+                                <span>
+                                  {item.ITEM_TYPE === 'gem_exchange' && (
+                                    <p className="m-0">{item.gemExchange?.GEM_REWARD} Gem</p>
+                                  )}
+                                  {item.ITEM_TYPE === 'exp_boost' && (
+                                    <p className="m-0">เพิ่ม EXP {item.expBooster?.BOOST_MULTIPLIER} เท่า เป็นจำนวน {item.expBooster?.BOOST_DAYS} วัน</p>
+                                  )}
+                                </span>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-2  border-b w-1/4 text-center">{(item.RARITY * 100).toFixed(0)}%</td>
+                        </tr>
+                      ))
+                    ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
 
         {activeTab === "exchange" && (
           <div>
-            <table className="w-full border-collapse overflow-y-auto flex-grow">
+            <table className="w-full border-collapse">
               <thead className="sticky top-0 bg-white">
                 <tr className="text-left text-gray-600">
-                  <th className="py-2 px-4 border-b cursor-pointer" >
+                  <th className="py-2 px-4 border-b cursor-pointer">
                     ของรางวัลที่จะได้รับ
                   </th>
-                  <th className="py-2 px-4 border-b cursor-pointer" >
+                  <th className="py-2 px-4 border-b cursor-pointer">
                     เกณฑ์การแลกเปลี่ยน
                   </th>
-
                 </tr>
               </thead>
-              <tbody>
-                {Array.isArray(items) &&
-                  items.map((item) => (
-                    <tr key={item.ITEM_ID} className="text-sm text-gray-700">
-                      <td className="py-2 px-4 border-b">
-                        <div className="flex items-center space-x-3">
-                          <Image src={itemImages[item.ITEM_TYPE] || "/asset/EXP.svg"} alt={item.ITEM_TYPE} width={24} height={24} />
-                          <span>{item.PRICE_EXP}</span>
-                        </div>
-                      </td>
-                      <td className="py-2 px-4 border-b">
-                        <div className="flex items-center space-x-2">
-                          {item.PRICE_EXP > 0 ? (
-                            <>
-                              <Image src="/asset/EXP.svg" alt="EXP" width={24} height={24} />
-                              <span>{item.PRICE_EXP} exp</span>
-                            </>
-                          ) : (
-                            <>
-                              <Image src="/asset/GEM.svg" alt="GEM" width={24} height={24} />
-                              <span>{item.PRICE_GEM} Gems</span>
-                            </>
-                          )}
-                        </div>
-
-                      </td>
-
-                    </tr>
-                  ))}
-              </tbody>
             </table>
+
+            {/* ใส่ div นี้ครอบ tbody เพื่อให้มี scrollbar */}
+            <div className="max-h-[220px] overflow-y-auto scrollbar-custom">
+              <table className="w-full border-collapse">
+                <tbody>
+                  {Array.isArray(items) &&
+                    items.map((item) => (
+                      <tr key={item.ITEM_ID} className="text-sm text-gray-700 ">
+                        <td className="py-2 px-4 border-b">
+                          <div className="flex items-center space-x-3">
+                            <Image src={itemImages[item.ITEM_TYPE] || "/asset/EXP.svg"} alt={item.ITEM_TYPE} width={24} height={24} />
+                            <span>{item.PRICE_EXP}</span>
+                          </div>
+                        </td>
+                        <td className=" border-b ">
+                          <div className="flex items-center space-x-2">
+                            {item.PRICE_EXP > 0 ? (
+                              <>
+                                <Image src="/asset/EXP.svg" alt="EXP" width={24} height={24} />
+                                <span>{item.PRICE_EXP} exp</span>
+                              </>
+                            ) : (
+                              <>
+                                <Image src="/asset/GEM.svg" alt="GEM" width={24} height={24} />
+                                <span>{item.PRICE_GEM} Gems</span>
+                              </>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  }
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
+
+
       </div>
     </div>
   );
