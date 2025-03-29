@@ -38,7 +38,7 @@ const UserList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("accessToken");
         const response = await fetch("http://localhost:3000/users/lists?limit=100", {
           method: "GET",
           credentials: "include",

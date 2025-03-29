@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import React from 'react';
 import { usePathname } from 'next/navigation';
+import { handleLogout } from '../services/auth/auth';
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();
@@ -45,7 +46,7 @@ const Navbar: React.FC = () => {
 
       <button
         className="px-6 py-2 text-sm font-semi bg-white text-gray-500 border-2 border-gray-500 rounded-lg hover:bg-red-600 hover:text-white flex items-center justify-between"
-        onClick={() => alert('Logged out')}
+        onClick={handleLogout}
       >
         <span>ออกจากระบบ</span>
         <Image
