@@ -73,7 +73,7 @@ const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmou
         if (selectedCategory === 'exercise' && selectedSubCategory && selectedSubCategory !== "") {
             formData.append('EXERCISE_TYPE', selectedSubCategory);
         }
-        if (selectedType === 'เควส' ) {
+        if (selectedType === 'เควส') {
             formData.append('RQ_TARGET_VALUE', amount.toString()); // จำนวนที่ใส่ในช่อง input
             formData.append('TRACKING_TYPE', timeUnit); // จะส่งเป็น 'duration', 'distance', หรือ 'count'
             formData.append('DAY_DURATION', dayDuration);
@@ -232,23 +232,26 @@ const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmou
                     {(selectedType === 'เควส' && selectedCategory === 'exercise') && (
                         <div className="flex flex-col sm:flex-row gap-4">
                             {/* Left section */}
-                            <div className="flex">
-                                <input
-                                    type="number"
-                                    value={amount}
-                                    onChange={(e) => setAmount(parseInt(e.target.value))}
-                                    placeholder="30"
-                                    className="w-full rounded-l-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-                                <select
-                                    value={timeUnit}
-                                    onChange={(e) => setTimeUnit(e.target.value)}
-                                    className="rounded-r-md border border-l-0 border-gray-300 bg-white px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                >
-                                    <option value="duration">นาที</option>
-                                    <option value="distance">ระยะทาง (กิโลเมตร)</option>
-                                    <option value="count">ครั้ง</option>
-                                </select>
+                            <div className="flex-1">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">ระยะเวลาภารกิจ</label>
+                                <div className="flex items-center ">
+                                    <input
+                                        type="number"
+                                        value={amount}
+                                        onChange={(e) => setAmount(parseInt(e.target.value))}
+                                        placeholder="30"
+                                        className=" rounded-l-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    />
+                                    <select
+                                        value={timeUnit}
+                                        onChange={(e) => setTimeUnit(e.target.value)}
+                                        className="rounded-r-md border border-l-0 border-gray-300 bg-white px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                        <option value="duration">นาที</option>
+                                        <option value="distance">ระยะทาง (กิโลเมตร)</option>
+                                        <option value="count">ครั้ง</option>
+                                    </select>
+                                </div>
                             </div>
 
                             {/* Right section */}
