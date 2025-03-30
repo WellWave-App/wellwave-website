@@ -27,6 +27,9 @@ const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmou
 
     const [selectedDataPrice, setSelectedDataPrice] = useState<SelectDataPrice | null>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null); // เก็บค่าไฟล์ที่เลือก
+    const [selectedSubQuestCategory, setSelectedSubQuestCategory] = useState(''); // เพิ่ม state สำหรับเก็บค่าเควส
+    const [timeUnit, setTimeUnit] = useState("duration"); // ตั้งค่าเริ่มต้นเป็น "duration"
+    const [dayDuration, setDayDuration] = useState<string>(''); // เก็บค่า unit ที่เลือก
 
     if (!isOpen) return null;
 
@@ -48,14 +51,33 @@ const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmou
             formData.append('file', selectedFile); // เพิ่มไฟล์ลงใน FormData
         }
         formData.append('TITLE', title);
-        formData.append('TRACKING_TYPE', 'duration');
-        formData.append('DEFAULT_DAILY_MINUTE_GOAL', amount.toString());
-        formData.append('DEFAULT_DAYS_GOAL', duration.toString());
+
+
+        if (selectedType === 'ภารกิจปรับนิสัย' || selectedType === 'ภารกิจประจำวัน') {
+            formData.append('DEFAULT_DAILY_MINUTE_GOAL', amount.toString());
+            formData.append('DEFAULT_DAYS_GOAL', duration.toString());
+            formData.append('EXP_REWARD', selectedDataPrice?.PRICE_EXP?.toString() || '0');
+            formData.append('GEM_REWARD', selectedDataPrice?.PRICE_GEM?.toString() || '0');
+            formData.append('TRACKING_TYPE', 'duration');
+        }
+
+        if (selectedType === 'เควส') {
+
+            formData.append('EXP_REWARDS', selectedDataPrice?.PRICE_EXP?.toString() || '0');
+            formData.append('GEM_REWARDS', selectedDataPrice?.PRICE_GEM?.toString() || '0');
+        }
+
         formData.append('DESCRIPTION', description);
-        formData.append('EXP_REWARD', selectedDataPrice?.PRICE_EXP?.toString() || '0');
-        formData.append('GEM_REWARD', selectedDataPrice?.PRICE_GEM?.toString() || '0');
-        if (selectedCategory === 'exercise' && selectedSubCategory) {
+
+
+        if (selectedCategory === 'exercise' && selectedSubCategory && selectedSubCategory !== "") {
             formData.append('EXERCISE_TYPE', selectedSubCategory);
+        }
+        if (selectedType === 'เควส' ) {
+            formData.append('RQ_TARGET_VALUE', amount.toString()); // จำนวนที่ใส่ในช่อง input
+            formData.append('TRACKING_TYPE', timeUnit); // จะส่งเป็น 'duration', 'distance', หรือ 'count'
+            formData.append('DAY_DURATION', dayDuration);
+
         }
         // เพิ่มข้อมูลใน FormData ตามประเภท
         if (selectedType === 'ภารกิจประจำวัน') {
@@ -69,6 +91,8 @@ const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmou
         } else if (selectedType === 'เควส') {
             url = 'http://localhost:3000/quest';
             formData.append('RELATED_HABIT_CATEGORY', selectedCategory);
+
+            formData.append('QUEST_TYPE', selectedSubQuestCategory); // ส่งประเภทเควส
         } else if (selectedType === 'ภารกิจประจำวัน') {
             url = 'http://localhost:3000/habit';
             formData.append('CATEGORY', selectedCategory);
@@ -123,7 +147,23 @@ const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmou
                         <option>ภารกิจประจำวัน</option>
                         <option>เควส</option>
                     </select>
+                    {selectedType === 'เควส' && (
 
+                        <div>
+                            <label className="block text-gray-700 mt-4">ประเภทของเควส</label>
+                            <select
+                                className="w-full border rounded p-2"
+                                onChange={(e) => setSelectedSubQuestCategory(e.target.value)}
+                            >
+                                <option value="">ประเภทของเควส</option>
+                                <option value="normal"> มีเป้าหมายที่กำหนด</option>
+                                <option value="streak_based">ความต่อเนื่อง</option>
+                                <option value="completion_based">ความสำเร็จมิชชัน</option>
+                                <option value="daily_completion_based">ความสำเร็จบันทึกรายวัน</option>
+
+                            </select>
+                        </div>
+                    )}
                     <label className="block text-gray-700">ชื่อภารกิจ</label>
                     <input
                         type="text"
@@ -169,6 +209,7 @@ const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmou
                         </label>
                     </div>
 
+
                     {selectedCategory === 'exercise' && (
                         <div>
                             <label className="block text-gray-700 mt-4">หมวดหมู่รอง</label>
@@ -188,11 +229,49 @@ const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmou
                             </select>
                         </div>
                     )}
+                    {(selectedType === 'เควส' && selectedCategory === 'exercise') && (
+                        <div className="flex flex-col sm:flex-row gap-4">
+                            {/* Left section */}
+                            <div className="flex">
+                                <input
+                                    type="number"
+                                    value={amount}
+                                    onChange={(e) => setAmount(parseInt(e.target.value))}
+                                    placeholder="30"
+                                    className="w-full rounded-l-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                />
+                                <select
+                                    value={timeUnit}
+                                    onChange={(e) => setTimeUnit(e.target.value)}
+                                    className="rounded-r-md border border-l-0 border-gray-300 bg-white px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                                    <option value="duration">นาที</option>
+                                    <option value="distance">ระยะทาง (กิโลเมตร)</option>
+                                    <option value="count">ครั้ง</option>
+                                </select>
+                            </div>
 
-                    <div className="flex flex-col sm:flex-row gap-4">
+                            {/* Right section */}
+                            <div className="flex-1">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">ระยะเวลาภารกิจ</label>
+                                <div className="flex items-center ">
+                                    <input
+                                        type="number"
+                                        value={dayDuration}
+                                        onChange={(e) => setDayDuration(e.target.value)}
+                                        placeholder="30"
+                                        className="w-full rounded-l-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    />
+                                    <span className="rounded-r-md border border-l-0 border-gray-300 bg-white px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">วัน</span>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {(selectedType === 'ภารกิจปรับนิสัย' || selectedType === 'ภารกิจประจำวัน') && (<div className="flex flex-col sm:flex-row gap-4">
                         {/* Left section */}
                         <div className="flex-1">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">จำนวน</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">จำนวนภารกิจ</label>
                             <div className="flex">
                                 <input
                                     type="number"
@@ -207,7 +286,7 @@ const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmou
 
                         {/* Right section */}
                         <div className="flex-1">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">ระยะเวลาการก่อ</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">ระยะเวลาภารกิจ</label>
                             <div className="flex items-center ">
                                 <input
                                     type="number"
@@ -220,6 +299,8 @@ const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmou
                             </div>
                         </div>
                     </div>
+                    )}
+
 
                     <label className="block text-gray-700">รายละเอียด</label>
                     <input
