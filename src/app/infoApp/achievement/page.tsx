@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import FileUpload from "../../components/upload";
-import { IoMdTrash } from "react-icons/io";
+
+import AchievementPopup from './widget/addAchievement';
 
 interface Reward {
   EXP: number;
@@ -180,95 +180,16 @@ const Achievements = () => {
           <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={() => setIsOpen(true)}>
             + เพิ่มความสำเร็จ
           </button>
-          {isOpen && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 ">
-              <div className="bg-white rounded-lg shadow max-w-[600px] w-full max-h-[600px] p-6 m-18">                {/* Header */}
-                <div className="flex justify-between items-center border-b pb-3">
-                  <h2 className="text-lg font-semibold">เพิ่มความสำเร็จ</h2>
-                  <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-gray-700">
-                    ✖
-                  </button>
-                </div>
-
-                {/* Form ใน Popup */}
-                <div className="mt-4 space-y-4  max-h-[500px] overflow-y-auto  scrollbar-custom pr-2 ">
-
-                  <label className="block text-gray-700">ชื่อความสำเร็จ</label>
-                  <input type="text" className="w-full border rounded p-2" placeholder="ชื่อความสำเร็จ" />
-                  <label className="block text-gray-700">รางวัล</label>
-                  <div className="flex gap-2">
-                    <select className="border rounded p-2">
-                      <option>Gem</option>
-                      <option>EXP</option>
-                    </select>
-                    <input type="number" className=" w-full border rounded p-2 " placeholder="จำนวน" />
-                  </div>
-
-                  <label className="block text-gray-700">เกณฑ์การเลื่อนขั้น</label>
-
-
-                  {/* แสดงระดับทั้งหมดที่มี */}
-                  {levels.map((level, index) => (
-                    <div key={index} className="flex flex-col gap-4">
-                      {/* ส่วนของระดับ และปุ่มลบ (ไอคอนถังขยะ) */}
-                      <div className="flex justify-between items-center gap-2">
-                        <label className="block text-gray-700">ระดับที่ {level.level}</label>
-                        {/* ปุ่มลบ (ไอคอนถังขยะ) */}
-                        <button
-                          onClick={() => deleteLevel(level.level)}
-                          className="text-gray-600 hover:text-gray-600 rounded p-2 border border-gray-300"
-                        >
-                          <IoMdTrash size={24} />
-                        </button>
-                      </div>
-
-                      {/* ส่วนของการกรอกข้อมูลสำหรับระดับ */}
-                      <FileUpload onFileSelect={function (): void {
-                        throw new Error('Function not implemented.');
-                      }} />
-                      <div className="flex gap-2 items-center">
-                        <select className="border rounded p-2">
-                          <option>Gem</option>
-                          <option>EXP</option>
-                        </select>
-                        <select className="border rounded p-2">
-                          <option>Gem</option>
-                          <option>EXP</option>
-                        </select>
-                        <div className="flex items-center w-full">
-                          <input
-                            type="number"
-                            value={level.duration}
-                            onChange={(e) => handleDurationChange(index, parseInt(e.target.value) || 1)}
-                            min="1"
-                            className="w-full rounded-l-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          />
-                          <span className="rounded-r-md border border-l-0 border-gray-300 bg-white px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">วัน</span>
-                        </div>
-                      </div>
-                    </div>
-
-                  ))}
-
-                  {/* ปุ่ม */}
-                  <div className="flex justify-between mt-2">
-                    <button onClick={addLevel} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                      + เพิ่มระดับ
-                    </button>
-                    <div className="flex gap-2">
-                      <button onClick={() => setIsOpen(false)} className="px-4 py-2 text-gray-500 hover:text-gray-700">
-                        ยกเลิก
-                      </button>
-                      <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                        ยืนยัน
-                      </button>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          )}</div>
+          <AchievementPopup
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            levels={levels}
+            setLevels={setLevels}
+            addLevel={addLevel}
+            deleteLevel={deleteLevel}
+            handleDurationChange={handleDurationChange}
+          />
+        </div>
 
         <div className="relative mt-4 mb-3">
           <input
@@ -287,7 +208,7 @@ const Achievements = () => {
             achievements.map((achievement, index) => (
               <div
                 key={index}
-                className="bg-white rounded-md shadow p-4 flex items-center hover:shadow-lg transition border border-gray-300 mx-2 my-4"
+                className="bg-white rounded-md shadow p-4 flex items-center hover:shadow-lg transition border border-gray-300"
               >
                 <div className="w-16 h-16 bg-red-200 rounded-md flex-shrink-0"></div>
                 <div className="ml-4 flex-grow">
