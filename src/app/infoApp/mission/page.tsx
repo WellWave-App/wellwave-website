@@ -47,7 +47,6 @@ const TaskPage = () => {
   });
 
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchTasks = async () => {

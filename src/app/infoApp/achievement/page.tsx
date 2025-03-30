@@ -99,21 +99,14 @@ const Achievements = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   // const [duration, setDuration] = useState(3);
-  const [levels, setLevels] = useState([
-    { level: 1, duration: 1 }, // เริ่มต้นด้วยระดับ 1
-  ]);
+
   // const [duration, setDuration] = useState(1);
 
   // ฟังก์ชันเพิ่มระดับใหม่
-  const addLevel = () => {
-    const newLevel = { level: levels.length + 1, duration: 1 }; // ระดับใหม่
-    setLevels([...levels, newLevel]); // เพิ่มระดับใหม่
-  };
+
 
   // ฟังก์ชันลบระดับ
-  const deleteLevel = (levelToDelete: number) => {
-    setLevels(levels.filter(level => level.level !== levelToDelete));
-  };
+
   const Pagination = () => {
     const startItem = pagination.total > 0 ? (currentPage - 1) * 10 + 1 : 0;
     const endItem = Math.min(currentPage * 10, pagination.total);
@@ -143,12 +136,7 @@ const Achievements = () => {
     );
   };
   // ฟังก์ชันอัพเดต duration สำหรับระดับต่างๆ
-  const handleDurationChange = (index: number, value: number) => {
-    const updatedLevels = levels.map((lvl, i) =>
-      i === index ? { ...lvl, duration: value } : lvl
-    );
-    setLevels(updatedLevels);
-  };
+
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;

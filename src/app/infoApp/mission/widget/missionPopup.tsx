@@ -1,6 +1,9 @@
+"use client";
 
 import React, { useState } from 'react';
 import FileUpload from '@/app/components/upload';
+
+import CustomSelectPrice from '../../reward/widget/customSelectPrice';
 
 interface PopupProps {
     isOpen: boolean;
@@ -10,18 +13,28 @@ interface PopupProps {
     duration: number;
     setDuration: (duration: number) => void;
 }
-
+interface SelectDataPrice {
+    PRICE_EXP?: number;
+    PRICE_GEM?: number;
+    GEM_REWARD?: number;
+}
 const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmount, duration, setDuration }) => {
-    if (!isOpen) return null;
-
     const [selectedType, setSelectedType] = useState<string>('ภารกิจปรับนิสัย'); // ใช้ติดตามประเภทที่เลือก
-    const [isDaily, setIsDaily] = useState<boolean>(false);
     const [title, setTitle] = useState<string>('');
     const [selectedCategory, setSelectedCategory] = useState<string>('');
     const [selectedSubCategory, setSelectedSubCategory] = useState<string>('');
     const [description, setDescription] = useState('');
 
+    const [selectedDataPrice, setSelectedDataPrice] = useState<SelectDataPrice | null>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null); // เก็บค่าไฟล์ที่เลือก
+
+    if (!isOpen) return null;
+
     // ฟังก์ชันเพื่อส่งข้อมูลไปยัง API ตามประเภทภารกิจ
+    const handleFileSelect = (file: File | null) => {
+        if (!file) return;
+        setSelectedFile(file); // เก็บไฟล์ใน state เพื่อให้สามารถส่งใน handleSubmit ได้
+    };
 
     const handleCategoryChange = (category: string) => {
         setSelectedCategory(category);
@@ -31,18 +44,22 @@ const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmou
     };
     const handleSubmit = async () => {
         const formData = new FormData();
+        if (selectedFile) {
+            formData.append('file', selectedFile); // เพิ่มไฟล์ลงใน FormData
+        }
         formData.append('TITLE', title);
         formData.append('TRACKING_TYPE', 'duration');
         formData.append('DEFAULT_DAILY_MINUTE_GOAL', amount.toString());
         formData.append('DEFAULT_DAYS_GOAL', duration.toString());
         formData.append('DESCRIPTION', description);
-
+        formData.append('EXP_REWARD', selectedDataPrice?.PRICE_EXP?.toString() || '0');
+        formData.append('GEM_REWARD', selectedDataPrice?.PRICE_GEM?.toString() || '0');
         if (selectedCategory === 'exercise' && selectedSubCategory) {
             formData.append('EXERCISE_TYPE', selectedSubCategory);
         }
         // เพิ่มข้อมูลใน FormData ตามประเภท
         if (selectedType === 'ภารกิจประจำวัน') {
-            formData.append('IS_DAILY', 'false'); // หากเป็นภารกิจประจำวัน
+            formData.append('IS_DAILY', 'true'); // หากเป็นภารกิจประจำวัน
         }
 
         let url = '';
@@ -63,16 +80,24 @@ const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmou
             const response = await fetch(url, {
                 method: 'POST',
                 body: formData,
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
             });
             if (response.ok) {
-                alert('ส่งข้อมูลสำเร็จ');
+                console.log('ส่งข้อมูลสำเร็จ!');
                 setIsOpen(false);
             } else {
-                alert('เกิดข้อผิดพลาดในการส่งข้อมูล');
+                console.log('เกิดข้อผิดพลาดในการส่งข้อมูล!');
+
             }
         } catch (error) {
-            alert('เกิดข้อผิดพลาด: ' + error);
+            console.log('เกิดข้อผิดพลาดในการส่งข้อมูล!' + error);
         }
+    };
+
+    const handleChange = (data: SelectDataPrice) => {
+        setSelectedDataPrice(data);
     };
 
     return (
@@ -209,17 +234,11 @@ const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmou
 
                     {/* รางวัล */}
                     <label className="block text-gray-700">รางวัล</label>
-                    <div className="flex gap-2">
-                        <select className="border rounded p-2">
-                            <option>Gem</option>
-                            <option>EXP</option>
-                        </select>
-                        <input type="number" className="w-full border rounded p-2" placeholder="จำนวน" />
-                    </div>
+                    <CustomSelectPrice onChange={handleChange} />
+
 
                     <label className="block text-gray-700">รูปภาพภารกิจ</label>
-                    <FileUpload onFileSelect={() => { }} />
-
+                    <FileUpload onFileSelect={(file) => handleFileSelect(file as File | null)} />
                     {/* ปุ่ม */}
                     <div className="flex justify-end gap-2 mt-4">
                         <button onClick={() => setIsOpen(false)} className="px-4 py-2 text-gray-500 hover:text-gray-700">
