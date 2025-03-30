@@ -207,6 +207,11 @@ export default function CardGrid() {
     obesity: "โรคอ้วน",
     // Add any other disease types you need to translate here
   };
+  const habitTypeMap = {
+    diet: "การรับประทานอาหาร",
+    exercise: "ออกกำลังกาย",
+    sleep: "การนอน",
+  };
   // Fetch data when component mounts
   useEffect(() => {
     const fetchData = async () => {
@@ -279,11 +284,12 @@ export default function CardGrid() {
             <li className="flex justify-between">
               <span className="text-gray-600">ล่าสุด</span>
             </li>
-            {data.missions.latestMissions.map((mission, index) => (
+            {data.missions.latestMissions.slice(0, 4).map((mission, index) => (
               <p key={index} className="flex justify-between">
                 {mission.title}
                 <span className="text-blue-500 bg-blue-200 px-2 py-1 rounded ml-auto">
-                  {mission.habit_type}
+                  {habitTypeMap[mission.habit_type] || mission.habit_type}{" "}
+                  {/* fallback หากไม่พบค่า */}
                 </span>
               </p>
             ))}

@@ -183,11 +183,10 @@ const Achievements = () => {
           <AchievementPopup
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            levels={levels}
-            setLevels={setLevels}
-            addLevel={addLevel}
-            deleteLevel={deleteLevel}
-            handleDurationChange={handleDurationChange}
+
+
+
+
           />
         </div>
 

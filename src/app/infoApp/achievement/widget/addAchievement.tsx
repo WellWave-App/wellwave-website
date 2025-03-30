@@ -9,7 +9,7 @@ interface Level {
         EXP: number;
         GEMS: number;
     };
-    file?: File;
+    file?: File | null;
 }
 
 interface LevelItemProps {
@@ -18,7 +18,7 @@ interface LevelItemProps {
     deleteLevel: (level: number) => void;
     handleDurationChange: (index: number, duration: number) => void;
     handleRewardChange: (index: number, type: 'EXP' | 'GEMS', value: number) => void;
-    handleFileSelect: (index: number, file: File) => void;
+    handleFileSelect: (index: number, file: File | null) => void;
 }
 
 // Level Item Component
@@ -35,9 +35,8 @@ const LevelItem = ({ level, index, deleteLevel, handleDurationChange, handleRewa
                     <IoMdTrash size={24} />
                 </button>
             </div>
-
             <FileUpload
-                onFileSelect={(file) => file && handleFileSelect(index, file)}
+                onFileSelect={(file) => handleFileSelect(index, file)}
             />
 
             <div className="flex gap-2 items-center w-full">
@@ -142,15 +141,17 @@ const AchievementPopup = ({ isOpen, setIsOpen }: AchievementPopupProps) => {
     };
 
     // Handle file select
-    const handleFileSelect = (index: number, file: File) => {
+    const handleFileSelect = (index: number, file: File | null) => {
         const updatedLevels = [...levels];
-        updatedLevels[index].file = file;
+        updatedLevels[index].file = file || undefined;
         setLevels(updatedLevels);
     };
 
     // Submit form
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+        e.preventDefault(); // ป้องกันการ submit form
+        e.stopPropagation(); // เพิ่มบรรทัดนี้เพื่อป้องกันการ propagate ของ event
+
         console.log("Title ที่กรอก: ", title);
         if (!title.trim()) {
             alert('กรุณากรอกชื่อความสำเร็จ');
