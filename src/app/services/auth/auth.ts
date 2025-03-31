@@ -1,6 +1,6 @@
 export const handleLogout = async () => {
     try {
-        const response = await fetch('http://localhost:3000/auth/logout', {
+        const response = await fetch('http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/auth/logout', {
             method: 'GET',
             credentials: 'include',
             headers: {

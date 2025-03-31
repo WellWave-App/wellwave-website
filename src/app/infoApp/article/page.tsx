@@ -50,7 +50,7 @@ const ArticlePage = () => {
     setLoading(true);
     try {
       const limit = 10;
-      const url = `http://localhost:3000/article/search?${diseaseId ? `diseaseIds=${diseaseId}&` : ''}page=${page}&limit=${limit}`;
+      const url = `http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/article/search?${diseaseId ? `diseaseIds=${diseaseId}&` : ''}page=${page}&limit=${limit}`;
       const response = await fetch(url);
       const data = await response.json();
 
@@ -86,7 +86,7 @@ const ArticlePage = () => {
             <li key={article.AID} className="flex items-start bg-white rounded-lg shadow hover:shadow-lg mb-3">
               <div className="w-32 h-32 bg-gray-200 flex items-center justify-center rounded-l-lg">
                 {/* <Image
-                  src={`http://localhost:3000$/get-image/{article.THUMBNAIL_URL}`}
+                  src={`http://ce67-16.cloud.ce.kmitl.ac.th/api/v1$/get-image/{article.THUMBNAIL_URL}`}
                   alt="article-thumbnail"
                   width={128}
                   height={128}

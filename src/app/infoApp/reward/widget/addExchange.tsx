@@ -80,7 +80,7 @@ const AddExchange: React.FC<AddExchangeProps> = ({ isExchangeModalOpen, setIsExc
     const token = localStorage.getItem("accessToken");
 
     try {
-      const response = await fetch('http://localhost:3000/shop/items', {
+      const response = await fetch('http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/shop/items', {
         method: 'POST',
         headers: {
           "Authorization": `Bearer ${token}`,

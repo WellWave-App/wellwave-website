@@ -207,7 +207,7 @@ const AchievementPopup = ({ isOpen, setIsOpen }: AchievementPopupProps) => {
             const token = localStorage.getItem("accessToken");
 
             // Send data to server
-            const response = await fetch('http://localhost:3000/achievement/', {
+            const response = await fetch('http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/achievement/', {
                 method: 'POST',
                 body: formData,
                 headers: {

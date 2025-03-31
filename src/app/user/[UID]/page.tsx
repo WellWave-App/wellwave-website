@@ -122,7 +122,7 @@ const UserDetailPage = () => {
                     setLoading(false);
                     return;
                 }
-                const response = await fetch(`http://localhost:3000/users/profile-deep/${UID}`, {
+                const response = await fetch(`http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/users/profile-deep/${UID}`, {
                     method: "GET",
                     headers: {
                         "Authorization": `Bearer ${token}`,

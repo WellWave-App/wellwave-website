@@ -64,8 +64,8 @@ const ShopItems = () => {
       console.log("Token:", token);
       const url =
         activeTab === "randomBox"
-          ? "http://localhost:3000/shop/items?filter=inBox&page=1&limit=10"
-          : "http://localhost:3000/shop/items?filter=notInBox&page=1&limit=10";
+          ? "http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/shop/items?filter=inBox&page=1&limit=10"
+          : "http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/shop/items?filter=notInBox&page=1&limit=10";
 
       console.log("API Response:", url);
 
@@ -146,7 +146,7 @@ const ShopItems = () => {
           </div>
           <div className="w-36 h-36 rounded-xl flex flex-col items-center justify-center border border-gray-300">
             <Image
-              src="/asset/GEM.svg"
+              src="/asset/Gem.svg"
               alt="GEM"
               width={56}
               height={56}
@@ -294,7 +294,7 @@ const ShopItems = () => {
                               </>
                             ) : (
                               <>
-                                <Image src="/asset/GEM.svg" alt="GEM" width={24} height={24} />
+                                <Image src="/asset/Gem.svg" alt="GEM" width={24} height={24} />
                                 <span>{item.PRICE_GEM} Gems</span>
                               </>
                             )}

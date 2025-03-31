@@ -216,7 +216,7 @@ export default function CardGrid() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/admin/summary");
+        const response = await fetch("http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/admin/summary");
         const result = await response.json();
         setData(result);
       } catch (error) {

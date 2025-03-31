@@ -86,15 +86,15 @@ const MissionPopup: React.FC<PopupProps> = ({ isOpen, setIsOpen, amount, setAmou
 
         let url = '';
         if (selectedType === 'ภารกิจปรับนิสัย') {
-            url = 'http://localhost:3000/habit';
+            url = 'http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/habit';
             formData.append('CATEGORY', selectedCategory);
         } else if (selectedType === 'เควส') {
-            url = 'http://localhost:3000/quest';
+            url = 'http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/quest';
             formData.append('RELATED_HABIT_CATEGORY', selectedCategory);
 
             formData.append('QUEST_TYPE', selectedSubQuestCategory); // ส่งประเภทเควส
         } else if (selectedType === 'ภารกิจประจำวัน') {
-            url = 'http://localhost:3000/habit';
+            url = 'http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/habit';
             formData.append('CATEGORY', selectedCategory);
         }
         console.log('Selected URL:', url);

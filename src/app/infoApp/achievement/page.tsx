@@ -57,7 +57,7 @@ const Achievements = () => {
           return;
         }
 
-        const response = await fetch(`http://localhost:3000/achievement`, {
+        const response = await fetch(`http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/achievement`, {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${token}`,

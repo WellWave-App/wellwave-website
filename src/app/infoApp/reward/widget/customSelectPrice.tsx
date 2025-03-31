@@ -46,7 +46,7 @@ const CustomSelectPrice = ({
                 <div className="border rounded p-2 cursor-pointer w-28" onClick={() => setIsOpen(!isOpen)}>
                     <div className="flex items-center">
                         <Image
-                            src={selectedOption === "Gem" ? "/asset/GEM.svg" : "/asset/EXP.svg"}
+                            src={selectedOption === "Gem" ? "/asset/Gem.svg" : "/asset/EXP.svg"}
                             alt={selectedOption}
                             width={24}
                             height={24}
@@ -59,7 +59,7 @@ const CustomSelectPrice = ({
                 {isOpen && (
                     <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded w-full z-10">
                         <div className="flex items-center p-2 cursor-pointer w-full" data-value="Gem" onClick={handleSelectChange}>
-                            <Image src="/asset/GEM.svg" alt="Gem" width={24} height={24} className="mr-2" />
+                            <Image src="/asset/Gem.svg" alt="Gem" width={24} height={24} className="mr-2" />
                             <span>Gem</span>
                         </div>
                         <div className="flex items-center p-2 cursor-pointer w-full" data-value="Exp" onClick={handleSelectChange}>

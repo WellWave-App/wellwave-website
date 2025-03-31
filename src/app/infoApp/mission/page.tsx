@@ -55,7 +55,7 @@ const TaskPage = () => {
         console.log("Token:", token); // ตรวจสอบ token ว่าได้มาหรือไม่
 
 
-        const response = await fetch(`http://localhost:3000/habit/mission-stats`, {
+        const response = await fetch(`http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/habit/mission-stats`, {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${token}`,
@@ -230,7 +230,7 @@ const TaskPage = () => {
                             />
                             <span>{apiData[index].reward.gem}</span>
                             <Image
-                              src="/asset/exp.svg"
+                              src="/asset/EXP.svg"
                               alt="EXP"
                               width={14}
                               height={14}
@@ -252,7 +252,7 @@ const TaskPage = () => {
                         ) : apiData[index].reward.exp > 0 ? (
                           <>
                             <Image
-                              src="/asset/exp.svg"
+                              src="/asset/EXP.svg"
                               alt="EXP"
                               width={14}
                               height={14}

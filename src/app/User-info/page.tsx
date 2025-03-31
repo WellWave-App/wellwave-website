@@ -39,7 +39,7 @@ const UserList = () => {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        const response = await fetch("http://localhost:3000/users/lists?limit=100", {
+        const response = await fetch("http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/users/lists?limit=100", {
           method: "GET",
           credentials: "include",
           headers: token ? { Authorization: `Bearer ${token}` } : {},

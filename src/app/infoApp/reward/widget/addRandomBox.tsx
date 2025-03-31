@@ -75,7 +75,7 @@ const AddRandomBox: React.FC<AddRandomBoxProps> = ({ isRandomBoxModalOpen, setIs
     console.log('token API:', token);
   
     try {
-      const response = await fetch('http://localhost:3000/shop/mystery-box/test', {
+      const response = await fetch('http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/shop/mystery-box/test', {
         method: 'POST',
         headers: {
           "Authorization": `Bearer ${token}`,
