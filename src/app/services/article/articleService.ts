@@ -16,7 +16,7 @@ export const createArticle = async (formData: ArticleForm) => {
       data.append('file', formData.file);
     }
 
-    const response = await fetch('http://localhost:3001/article', {
+    const response = await fetch('http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/article', {
       method: 'POST',
       body: data,
       

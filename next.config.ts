@@ -5,15 +5,17 @@ const nextConfig: NextConfig = {
     // Disable ESLint during production builds
     ignoreDuringBuilds: true,
   },
-  // images: {
-  //   remotePatterns: [
-  //     {
-  //       protocol: 'http',
-  //       hostname: 'localhost',
-  //       port: '3001', 
-  //     },
-  //   ],
-  // },
+  images: {
+    domains: ['ce67-16.cloud.ce.kmitl.ac.th'],
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3001',
+      },
+    ],
+  },
+  
 };
 
 export default nextConfig;

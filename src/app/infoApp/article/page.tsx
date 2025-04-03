@@ -84,14 +84,16 @@ const ArticlePage = () => {
         <ul>
           {articles.map((article) => (
             <li key={article.AID} className="flex items-start bg-white rounded-lg shadow hover:shadow-lg mb-3">
-              <div className="w-32 h-32 bg-gray-200 flex items-center justify-center rounded-l-lg">
-                {/* <Image
-                  src={`http://ce67-16.cloud.ce.kmitl.ac.th/api/v1$/get-image/{article.THUMBNAIL_URL}`}
+              <div className="w-32 h-32 bg-gray-200 flex items-center justify-center rounded-l-lg overflow-hidden">
+                <Image
+                  src={`http://ce67-16.cloud.ce.kmitl.ac.th/api/v1${article.THUMBNAIL_URL}`}
                   alt="article-thumbnail"
                   width={128}
                   height={128}
-                /> */}
+                  className="object-cover w-full h-full"
+                />
               </div>
+
               <div className="ml-4 flex-grow">
                 <h2 className="text-lg font-bold text-gray-800 mt-4">{article.TOPIC}</h2>
                 <div className="flex items-center space-x-2 mt-1">

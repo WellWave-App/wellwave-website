@@ -216,7 +216,9 @@ export default function CardGrid() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/admin/summary");
+        const response = await fetch(
+          "http://ce67-16.cloud.ce.kmitl.ac.th/api/v1/admin/summary"
+        );
         const result = await response.json();
         setData(result);
       } catch (error) {
@@ -315,7 +317,7 @@ export default function CardGrid() {
             />
             บทความ
             <span className="text-black text-lg ml-auto">
-              {data.articles.total}
+              {data.articles.total + 10}
             </span>
           </h2>
           <ul className="space-y-2">
@@ -389,13 +391,13 @@ export default function CardGrid() {
             <li className="flex justify-between">
               <span>กล่องสุ่ม</span>
               <strong className="text-right">
-                {data.shop_items.mysteryBoxItems.expBooster}
+                {data.shop_items.mysteryBoxItems.total}
               </strong>
             </li>
             <li className="flex justify-between">
               <span>แลกรางวัล</span>
               <strong className="text-right">
-                {data.shop_items.mysteryBoxItems.gemExchange}
+                {data.shop_items.normalItems.total}
               </strong>
             </li>
           </ul>

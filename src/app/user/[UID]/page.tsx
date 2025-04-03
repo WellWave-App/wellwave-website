@@ -29,10 +29,25 @@ interface UserProfileResponse {
         USER_GOAL_EX_TIME_WEEK: number | null;
         createAt: string;
         AGE: number;
-        RISK_ASSESSMENT: string | null;
+        RISK_ASSESSMENT: RiskAssessment;
         LOGIN_STATS: LoginStats;
         COMPLETE_RATE: CompleteRate;
     };
+}
+
+interface RiskAssessment {
+    RA_ID: number;
+    DIASTOLIC_BLOOD_PRESSURE: number;
+    SYSTOLIC_BLOOD_PRESSURE: number;
+    HDL: number;
+    LDL: number;
+    WAIST_LINE: number;
+    HAS_SMOKE: boolean;
+    HAS_DRINK: boolean;
+    HYPERTENSION: number;  // ความเสี่ยง 0.0 - 1.0
+    DIABETES: number;      // ความเสี่ยง 0.0 - 1.0
+    DYSLIPIDEMIA: number;   // ความเสี่ยง 0.0 - 1.0
+    OBESITY: number;        // ความเสี่ยง 0.0 - 1.0
 }
 
 interface LoginStats {
@@ -75,11 +90,11 @@ const logsData = [
 ];
 
 const taskData: Task[] = [
-    { name: "ภารกิจ", category: "ออกกำลังกาย", reward: 150, successRate: "50%", participants: "10/99 คน", status: "เฉยๆ" },
-    { name: "ภารกิจ", category: "ออกกำลังกาย", reward: 200, successRate: "75%", participants: "20/99 คน", status: "สดใส" },
-    { name: "ภารกิจ", category: "พักผ่อน", reward: 300, successRate: "90%", participants: "50/99 คน", status: "ท้อแท้" },
-    { name: "ภารกิจ", category: "พักผ่อน", reward: 300, successRate: "90%", participants: "50/99 คน", status: "กดดัน" },
-    { name: "ภารกิจ", category: "พักผ่อน", reward: 300, successRate: "90%", participants: "50/99 คน", status: "พอใจ" },
+    { name: "ว่ายน้ำ 45 นาที", category: "ออกกำลังกาย", reward: 150, successRate: "50%", participants: "10/99 คน", status: "เฉยๆ" },
+    { name: "วิ่งจำนวน 30 นาที", category: "ออกกำลังกาย", reward: 200, successRate: "75%", participants: "20/99 คน", status: "สดใส" },
+    { name: "นอนครบ 8 ชั่วโมง", category: "พักผ่อน", reward: 300, successRate: "90%", participants: "50/99 คน", status: "ท้อแท้" },
+    { name: "นอนงีบ 15 นาทีระหว่างวัน", category: "พักผ่อน", reward: 300, successRate: "90%", participants: "50/99 คน", status: "กดดัน" },
+    { name: "เพิ่มผักใบเขียวในเมื้ออหาร", category: "รับประทานอาหาร", reward: 300, successRate: "90%", participants: "50/99 คน", status: "พอใจ" },
 ];
 const UserDetailPage = () => {
     const router = useRouter();
@@ -244,7 +259,7 @@ const UserDetailPage = () => {
                         height={16}
                         className="mr-1"
                     />
-                    <span className="text-black">ชื่อ [#UID45029{UID}]</span>
+                    <span className="text-black">ชื่อ [#UID00000{UID}]</span>
                 </p>
 
                 {/* รายละเอียดผู้ใช้ */}
@@ -266,7 +281,7 @@ const UserDetailPage = () => {
                             </span>
                         </div>
                         <div className="pb-2">
-                            <table className="w-[150px]">
+                            <table className="w-[400px]">
                                 <tbody>
                                     <tr>
                                         <td className="text-gray-700">อีเมล</td>
@@ -279,7 +294,9 @@ const UserDetailPage = () => {
                         <div className="flex justify-between items-center border-t pb-3 "></div>
                         <div className="grid grid-cols-2 gap-x-8 pb-3 ">
                             <div>
-                                <p><span className="text-gray-700 mr-4">เพศ</span>: {userData.data.GENDER}</p>
+                                <p>
+                                    <span className="text-gray-700 mr-4">เพศ</span>: {userData.data.GENDER ? 'เพศชาย' : 'เพศหญิง'}
+                                </p>
                                 <p><span className="text-gray-700 mr-4">อายุ</span>: {userData.data.AGE} ปี</p>
                             </div>
                             <div>
@@ -294,23 +311,23 @@ const UserDetailPage = () => {
                                 <tbody>
                                     <tr>
                                         <td className="text-gray-700 pr-4">รอบเอว</td>
-                                        {/* <td className="pl-1">: {user.age} ซม.</td> */}
+                                        <td className="pl-1">: {userData.data.RISK_ASSESSMENT.WAIST_LINE} ซม.</td>
                                     </tr>
                                     <tr>
                                         <td className="text-gray-700 pr-4">ความดันโลหิตขณะบีบตัว</td>
-                                        {/* <td className="pl-1">: {user.height} มิลลิเมตรปรอท</td> */}
+                                        <td className="pl-1">: {userData.data.RISK_ASSESSMENT.DIASTOLIC_BLOOD_PRESSURE} มิลลิเมตรปรอท</td>
                                     </tr>
                                     <tr>
                                         <td className="text-gray-700 pr-4">ความดันโลหิตขณะคลายตัว</td>
-                                        {/* <td className="pl-1">: {user.weight} มิลลิเมตรปรอท</td> */}
+                                        <td className="pl-1">: {userData.data.RISK_ASSESSMENT.LDL} มิลลิเมตรปรอท</td>
                                     </tr>
                                     <tr>
                                         <td className="text-gray-700 pr-4">คอเลสเตอรอลชนิดดี (HDL)</td>
-                                        {/* <td className="pl-1">: {user.weight} มก./ดล.</td> */}
+                                        <td className="pl-1">: {userData.data.RISK_ASSESSMENT.SYSTOLIC_BLOOD_PRESSURE} มก./ดล.</td>
                                     </tr>
                                     <tr>
                                         <td className="text-gray-700 pr-4">คอเลสเตอรอลชนิดไม่ดี (LDL)</td>
-                                        {/* <td className="pl-1">: {user.weight} มก./ดล.</td> */}
+                                        <td className="pl-1">: {userData.data.RISK_ASSESSMENT.LDL} มก./ดล.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -339,7 +356,7 @@ const UserDetailPage = () => {
                                     height={32}
                                     className="mr-1"
                                 />
-                                <p className="pr-3">150</p>
+                                <p className="pr-3">183</p>
                                 <Image
                                     src="/asset/Gem.svg"
                                     alt="Gem"
@@ -347,7 +364,7 @@ const UserDetailPage = () => {
                                     height={32}
                                     className="mr-1"
                                 />
-                                <p className="pr-3">150</p>
+                                <p className="pr-3">226</p>
                                 <div className="flex justify-between items-center border-l pr-2"></div>
                                 <Image
                                     src="/asset/daimonLeague.svg"
@@ -356,7 +373,7 @@ const UserDetailPage = () => {
                                     height={32}
                                     className="mr-1"
                                 />
-                                <p>ระดับไดมอนด์ อันดับที่ 16</p>
+                                <p>นักรักสุขภาพมือใหม่ อันดับที่ 16</p>
                             </div>
                         </div>
 
@@ -365,7 +382,7 @@ const UserDetailPage = () => {
                             <h2 className="text-lg font-semibold mb-4">ความสำเร็จภารกิจ</h2>
                             <div className="grid grid-cols-3 gap-4 space-x-2 ">
                                 <div className="place-items-center">
-                                    <ProgressCircle percentage={87} />
+                                    <ProgressCircle percentage={44.67} />
                                 </div>
 
                                 <div>
@@ -373,17 +390,17 @@ const UserDetailPage = () => {
                                     <div className="relative pl-5 flex justify-between items-center">
                                         <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-xl">•</span>
                                         <p className="ml-1">ภารกิจประจำวัน</p>
-                                        <span className="text-right">80 %</span>
+                                        <span className="text-right">40 %</span>
                                     </div>
                                     <div className="relative pl-5 flex justify-between items-center">
                                         <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-xl">•</span>
                                         <p className="ml-1">ภารกิจปรับนิสัย</p>
-                                        <span className="text-right">80 %</span>
+                                        <span className="text-right">50 %</span>
                                     </div>
                                     <div className="relative pl-5 flex justify-between items-center">
                                         <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-xl">•</span>
                                         <p className="ml-1">เควส</p>
-                                        <span className="text-right">80 %</span>
+                                        <span className="text-right">44 %</span>
                                     </div>
                                 </div>
 
@@ -393,17 +410,17 @@ const UserDetailPage = () => {
                                     <div className="relative pl-5 flex justify-between items-center">
                                         <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-xl">•</span>
                                         <p className="ml-1">ภารกิจประจำวัน</p>
-                                        <span className="text-right">80 %</span>
+                                        <span className="text-right">62 %</span>
                                     </div>
                                     <div className="relative pl-5 flex justify-between items-center">
                                         <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-xl">•</span>
                                         <p className="ml-1">ภารกิจปรับนิสัย</p>
-                                        <span className="text-right">80 %</span>
+                                        <span className="text-right">32 %</span>
                                     </div>
                                     <div className="relative pl-5 flex justify-between items-center">
                                         <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-xl">•</span>
                                         <p className="ml-1">เควส</p>
-                                        <span className="text-right">80 %</span>
+                                        <span className="text-right">40 %</span>
                                     </div>
                                 </div>
                             </div>

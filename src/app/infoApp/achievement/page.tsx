@@ -197,7 +197,13 @@ const Achievements = () => {
                 key={index}
                 className="bg-white rounded-md shadow p-4 flex items-center hover:shadow-lg transition border border-gray-300"
               >
-                <div className="w-16 h-16 bg-red-200 rounded-md flex-shrink-0"></div>
+                <div className="w-16 h-16  flex-shrink-0"> <Image
+                  src={`http://ce67-16.cloud.ce.kmitl.ac.th/api/v1${achievement.levels[0].ICON_URL}`}
+                  alt="article-thumbnail"
+                  width={124}
+                  height={124}
+                  className="object-cover w-full h-full"
+                /></div>
                 <div className="ml-4 flex-grow">
                   <h2 className="text-lg font-bold">{achievement.TITLE}</h2>
 
